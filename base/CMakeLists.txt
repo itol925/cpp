@@ -10,6 +10,7 @@ set(src
         src/storage.hpp
         src/function.hpp
         src/coroutine.hpp
+        src/classes.hpp
     )
 
 ADD_EXECUTABLE(base main.cpp ${src})
