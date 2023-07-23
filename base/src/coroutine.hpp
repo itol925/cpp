@@ -11,30 +11,18 @@ namespace base {
         namespace readme {
             // 协程就是用户态线程内可以被异步执行的函数。用来在用户态下解决异步问题。
 
-            // 普通函数：每次调用只能从第一条语句开始执行直到某个出口结束。
-            // 协程函数：协程函数交出控制权后，可以再次从交出控制权的下一语句开始执行。
-
-            // 在协程的叫法出现以前，处理异步问题一般会使用操作系统提供的系统级API来解决异步问题。
-            // 系统级的API都是大多采用回调函数方式实现。后来人们觉得使用异步回调形式的API比较麻烦，
-            // 就开始提供异步调用库或者语言级支持。并且起了个优雅的名字–协同程序。
-
-            // 协程不是线程。协程包含在线程内。协程在用户态，由用户控制。协程的切换比线程切换效率高。
-            // 同一个线程在一个时间点最多只能跑一个协程；在同一个线程中，
-            // 协程的运行是穿行的[穿插运行(同一个函数内非顺序运行)，一般认为不同与串行(顺序运行)]。所以没有数据争用(data race)，也不需要锁。
-            // 原则上，应该尽量避免将同一个协程的主体，放到不同的线程中同时执行。因为这样有很大概率发生数据争用(data race)。
-            // [其实这种情况下就是线程的数据争用问题]。所以我们应该在线程中讨论协程；而不是在进程中讨论协程。
-
-            // 目前在C/C++中比较知名的协程(类协程)库有:
+            // *目前在C/C++中比较知名的协程(类协程)库有
             // Boost.Fiber
             // Boost.Coroutine
             // fiber
             // libco
             // libtask
 
-            // 协程根据实现方式不同，分为有栈协程(stackful coroutine)和无栈协程(stackless coroutine)。
-            // 有栈协程可通过操作系统提供的系统调用实现;无栈协程需要语言标准和编译器支持。
+            // *协程根据实现方式不同，分为有栈协程(stackful coroutine)和无栈协程(stackless coroutine)。
+            // 有栈协程可通过操作系统提供的系统调用实现;
+            // 无栈协程需要语言标准和编译器支持。
 
-            // 微软拟提的C++20标准中(目前是ts,即:<experimental/coroutine>)的协程属于stackless coroutine。
+            // *微软拟提的C++20标准中(目前是ts,即:<experimental/coroutine>)的协程属于stackless coroutine。
 
             // *协程函数特点：
             // 1：首次调用协程函数，会从堆中分配一个协程上下文，调用方的返回地址、入口函数、交出控制权等信息保存在协程上下文中。
@@ -62,22 +50,43 @@ namespace base {
             // 5：需要语言标准和编译器支持。
 
             // *怎么识别C++20中的协程
-            // 如果在C++20的一个函数体内包含co_await、co_yield、co_return中任何一个关键字，那么这个函数就是一个coroutine。其中：
-            // co_await：挂起当前的coroutine。
-            // co_return：从当前coroutine返回一个结果。
-            // co_yield：返回一个结果并且挂起当前的coroutine。
+            // 函数体内包含co_await、co_yield、co_return中任何一个关键字，即认为函数是协程函数。其中：
+            // 1：co_await：挂起（or不挂起）协程。
+            // 2：co_return：返回结果并结束协程。
+            // 3：co_yield：返回结果并挂起协程。
 
-            // 一个coroutine必定包含Promise和Awaitable两个部分。
-            // 协程通过Promise和Awaitable接口来规范实现。实现最简单的协程需要用到其中的8个(5个Promise的函数和3个Awaitable的函数)。
-            // 如果要实现形如co_await xxxxx;的协程调用格式, xxxxx就必须实现Awaitable。co_await是一个新的运算符。Awaitable主要有3个函数：
-            // await_ready：返回Awaitable实例是否已经ready。协程开始会调用此函数，如果返回true，表示你想得到的结果已经得到了，协程不需要执行了。所以大部分情况这个函数的实现是要return false。
-            // await_suspend：挂起awaitable。该函数会传入一个coroutine_handle类型的参数。这是一个由编译器生成的变量。在此函数中调用handle.resume()，就可以恢复协程。
-            // await_resume：当协程重新运行时，会调用该函数。这个函数的返回值就是co_await运算符的返回值。
+            // *协程的概念模型
+            // ** Awaitable
+            // 通过 co_await 操作符触发 Awaitable 对象的动作，实现协程函数的转移、恢复控制权。Awaitable动作包括：
+            // 1：await_ready：返回Awaitable实例是否已经ready。协程开始会调用此函数，如果返回true，表示你想得到的结果已经得到了，协程不需要执行了。所以大部分情况这个函数的实现是要return false。
+            // 2：await_suspend：挂起awaitable。该函数会传入一个coroutine_handle类型的参数。这是一个由编译器生成的变量。在此函数中调用handle.resume()，就可以恢复协程。
+            // 3：await_resume：当协程重新运行时，会调用该函数。这个函数的返回值就是co_await运算符的返回值。
+
+            // ** Promise & Future
+            // *** Promise
+            // Promise 对象保存了协程的状态信息，包括局部变量，用户数据等。一个Promise对象需要实现如下方法：
+            // 1：initial_suspend: 返回一个 Awaitable 对象
+            // 2：final_suspend: 返回一个 Awaitable 对象
+            // 3：get_return_object: 返回一个 Future 对象给 Caller
+            // 4：unhandled_exception: 处理异常
+            // 5：return_value/return_void: co_return 时返回值给 Caller
+            // 6：yield_value: 挂起时返回值给 Caller
+            // *** Future
+            // 协程函数启动时，会返回一个 Future 对象给 Caller，Caller 通过 Future 对象来控制协程的执行。
+            // Future 通常会包含 Promise 的 handle，Caller 通过此 handle 来调用 Promise。Future 开放给 Caller 控制方法有：
+            // 1：destroy: 销毁 Promise 对象
+            // 2：from_promise: 静态方法，从 Promise 对象返回其 coroutine_handle 句柄
+            // 3：done: 是否处于 final_suspend 阶段
+            // 4：promise: 返回 Promise 对象引用
+            // 5：resume/operator(): 恢复到协程
+
+            // ref:
+            // https://zhuanlan.zhihu.com/p/218156339
         }
 
         namespace demo1 {
             template<typename T>
-            struct Task {
+            struct Future {
                 struct promise_type {
                     promise_type() { std::cout << "promise_type created\n"; }
                     ~promise_type() { std::cout << "promise_type died\n"; }
@@ -85,7 +94,7 @@ namespace base {
                     auto get_return_object() { //get return object
                         std::cout << "get_return_object called\n";
                         // pass handle to create "return object"
-                        return Task<T>{coroutine_handle<promise_type>::from_promise(*this)};
+                        return Future<T>{coroutine_handle<promise_type>::from_promise(*this)};
                     }
 
                     auto initial_suspend() { // called before run coroutine body
@@ -150,7 +159,7 @@ namespace base {
                 }
             };
 
-            Task<int> await_routine() {
+            Future<int> await_routine() {
                 auto a = AwaiableObj{};
                 for (int i = 0; i < 5; i++) {
                     auto v = co_await a;
@@ -177,7 +186,7 @@ namespace base {
         }
 
         namespace demo2 {
-            struct Task {
+            struct Future {
                 struct promise_type {
                     suspend_never initial_suspend() { return {}; }
                     suspend_never final_suspend() noexcept { return {}; }
@@ -188,7 +197,7 @@ namespace base {
                     void return_value(int r) {
                         std::cout << "coroutine task: call return_value " << r << std::endl;
                     }
-                    Task get_return_object() {
+                    Future get_return_object() {
                         return {coroutine_handle<promise_type>::from_promise(*this)};
                     }
                     void unhandled_exception() {}
@@ -213,7 +222,7 @@ namespace base {
                 }
             };
 
-            Task coroutine_func() {
+            Future coroutine_func() {
                 std::cout << "coroutine:call co_await" << std::endl;
                 int val = co_await AwaiableObj();
                 std::cout << "coroutine:call co_yield " << val << std::endl;
@@ -227,7 +236,7 @@ namespace base {
 
             void test_demo2() {
                 std::cout << "main:call coroutine_func" << std::endl;
-                Task c = coroutine_func();
+                Future c = coroutine_func();
                 std::cout << "main:call resume" << std::endl;
                 c.handle.resume();
                 std::cout << "main:call resume2" << std::endl;
@@ -285,12 +294,76 @@ namespace base {
                 consume();
             }
         }
+
+        namespace demo4 {
+            struct CoRet {
+                struct promise_type {
+                    int _out;
+                    int _res;
+                    suspend_never initial_suspend() {return {};}
+                    suspend_always final_suspend() noexcept {return {};}
+                    void unhandled_exception() {}
+                    CoRet get_return_object() {
+                        return {coroutine_handle<promise_type>::from_promise(*this)};
+                    }
+                    suspend_always yield_value(int r) {
+                        _out = r;
+                        return {};
+                    }
+                    void return_value(int r) {
+                        _res = r;
+                    }
+                };
+
+                coroutine_handle<promise_type> _h; // _h.resume(), _h()
+            };
+            struct Note { int guess; };
+            struct Input {
+                Note& _in;
+                bool await_ready() { return false; }
+                void await_suspend(coroutine_handle<CoRet::promise_type> h) {}
+                int await_resume() { return _in.guess; }
+            };
+            CoRet Guess(Note& note) {
+                // CoRet::promise_type promise;
+                // CoRet ret = promise.get_return_object();
+                // co_await promise.initial_suspend();
+                int res = (rand()%30)+1;
+                Input input{note};
+                int g = co_await input;
+                std::cout << "coroutine: You guess " << g << std::endl;
+
+                co_yield (res>g ? 1: (res == g? 0 : -1));
+                // co_await promise.yield_value()
+
+                co_return res;
+                // co_await promise.final_suspend();
+            }
+            void test_demo4() {
+                srand(time(nullptr));
+                Note note;
+                auto ret = Guess(note);
+                std::cout << "main: make a guess ..." << std::endl;
+                note.guess = 10;
+                ret._h.resume(); // resume from co_await
+                std::cout << "main: result is " <<
+                     ((ret._h.promise()._out == 1) ? "larger" :
+                      ((ret._h.promise()._out == 0) ? "the same" : "smaller"))
+                     << std::endl;
+
+                ret._h.resume(); // resume from co_yield
+                if(ret._h.done()) {
+                    std::cout << "main: the result is " <<  ret._h.promise()._res << std::endl;
+                }
+            }
+        }
     }
 
     void test_coroutine() {
         std::cout << "-- test coroutine --" << std::endl;
         //coroutine::demo1::test_demo1();
         //coroutine::demo2::test_demo2();
-        coroutine::demo3::test_demo3();
+        //coroutine::demo3::test_demo3();
+        coroutine::demo4::test_demo4();
     }
 }
