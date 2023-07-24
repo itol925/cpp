@@ -11,6 +11,7 @@ set(src
         src/function.hpp
         src/coroutine.hpp
         src/classes.hpp
+        src/segment.hpp
     )
 
 ADD_EXECUTABLE(base main.cpp ${src})
