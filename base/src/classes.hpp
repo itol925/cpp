@@ -470,7 +470,6 @@ namespace base {
                 delete b; // 安全
             };
 
-
             // 注：析构函数可以声明为纯虚，例如对于需要声明为抽象类，但没有其他可声明为纯虚的适合函数的基类。
             // 这种析构函数必须有定义，因为在销毁派生类时，所有基类析构函数都总是得到调用：
             class AbstractBase {
@@ -484,9 +483,6 @@ namespace base {
                 // AbstractBase obj;   // 编译错误，纯虚类，不能实例化
                 Derived2 obj;           // OK
             }
-
-
-
         }
     }
 }
