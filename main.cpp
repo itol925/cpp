@@ -1,6 +1,6 @@
-#include "src/initialization.hpp"
-#include "src/function.hpp"
-#include "src/coroutine.hpp"
+#include "src/base/initialization.hpp"
+#include "src/base/function.hpp"
+#include "src/base/coroutine.hpp"
 
 
 int main(int argc, char** argv) {
