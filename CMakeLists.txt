@@ -12,7 +12,13 @@ set(src
         src/base/coroutine.hpp
         src/base/classes.hpp
         src/base/segment.hpp
+
+        src/boost/io.hpp
     )
+
+set(BOOST_ROOT "/opt/homebrew")
+find_package(Boost REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
 
 ADD_EXECUTABLE(test main.cpp ${src})
 set_target_properties(test PROPERTIES LINKER_LANGUAGE CXX)
