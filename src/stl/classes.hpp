@@ -6,7 +6,7 @@
 #include <string>
 #include <algorithm>
 
-namespace base {
+namespace stl {
     // class 和 struct 均可用于类定义。struct 相当于 public class。
     namespace classes {
         namespace member {

@@ -1,15 +1,15 @@
-#include "src/base/initialization.hpp"
-#include "src/base/function.hpp"
-#include "src/base/coroutine.hpp"
+#include "src/stl/initialization.hpp"
+#include "src/stl/function.hpp"
+#include "src/stl/coroutine.hpp"
 
 #include "src/boost/io.hpp"
 #include "src/continuable/continuable.hpp"
 
 int main(int argc, char** argv) {
-    //base::init::init();
-    //base::func::test_func();
-    //base::test_coroutine();
+    //stl::init::init();
+    //stl::func::test_func();
+    stl::test_coroutine();
 
     //boost_demo::test_io();
-    continue_demo::test();
+    //continue_demo::test();
 }

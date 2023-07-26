@@ -2,7 +2,7 @@
 #include <experimental/coroutine>
 #include <queue>
 
-namespace base {
+namespace stl {
     using suspend_always = std::experimental::suspend_always;
     using suspend_never = std::experimental::suspend_never;
     using std::experimental::coroutine_handle;

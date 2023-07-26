@@ -1,7 +1,7 @@
 
 #include <iostream>
 
-namespace base {
+namespace stl {
     namespace init {
         namespace { // 常量初始化
             struct S {
@@ -16,7 +16,6 @@ namespace base {
             int* p;         // 零初始化为空指针值
             std::string s;  // 零初始化为不确定值再默认初始化为 ""
         }
-
 
         void init () {
             using namespace std;

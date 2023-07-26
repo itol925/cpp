@@ -1,6 +1,6 @@
 #include <iostream>
 
-namespace base {
+namespace stl {
     namespace func {
         // 函数可通过返回或者抛出异常终止
 
