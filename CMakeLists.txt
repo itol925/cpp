@@ -12,8 +12,11 @@ set(src
         src/stl/coroutine.hpp
         src/stl/classes.hpp
         src/stl/segment.hpp
+        src/stl/overload.hpp
+        src/stl/template.hpp
 
         src/boost/io.hpp
+
         src/continuable/continuable.hpp
     )
 
