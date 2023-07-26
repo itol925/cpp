@@ -14,6 +14,7 @@ set(src
         src/base/segment.hpp
 
         src/boost/io.hpp
+        src/continuable/continuable.hpp
     )
 
 set(BOOST_ROOT "/opt/homebrew")
