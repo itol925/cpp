@@ -64,6 +64,44 @@ namespace stl {
             concept EvenNumber = requires(T a) {
                 std::is_integral(a) && a % 2 == 0;
             };
+
+            // trait
+            class dog {};
+            class flower {};
+
+            /**
+             * 定义 区分 animal 的 trait
+             * 对所有预期的输出指定是否为 animal
+             * 这么做的好处是：1 编译器确定；2 将 is_animal 判断隔离到了 DescribeAnyThing 外面
+             * */
+            template<typename T>
+            struct obj_traits {
+                static const bool is_animal = false;
+            };
+            template<>
+            struct obj_traits<dog> {
+                static const bool is_animal = true;
+            };
+            template<>
+            struct obj_traits<flower> {
+                static const bool is_animal = false;
+            };
+
+            /** case1:
+             * DescribeAnyThing 要求
+             * 如果 T 是 animal 则输出 animal，否则输出非 animal
+             */
+            template<typename T>
+            class DescribeAnyThing {
+            public:
+                void desc(T sth) {
+                    if (obj_traits<T>::is_animal) {
+                        std::cout << "this is animal" << std::endl;
+                    } else {
+                        std::cout << "this is not animal" << std::endl;
+                    }
+                }
+            };
         }
     }
 }

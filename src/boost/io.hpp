@@ -148,88 +148,62 @@ namespace boost_demo {
             }
             io_context.run();
         }
-
-        namespace cs {
-            namespace protocol {
-                enum {
-                    header_size = sizeof(std::size_t)
-                };
-            }
-
-            void noop(const std::string &str) {
-                std::cout << "noop:" << str << std::endl;
-            }
-
-            std::vector<char> build_header(const std::string &body) {
-                std::vector<char> buffer(protocol::header_size);
-                auto body_size = body.size();
-                std::memcpy(&buffer[0], &body_size, sizeof body_size);
-                return buffer;
-            }
-
-            std::size_t parse_header(const std::vector<char> &buffer) {
-                return *reinterpret_cast<const std::size_t *>(&buffer[0]);
-            }
-
-            void test_cs() {
-                using asio::ip::tcp;
-
-                // Create all I/O objects.
-                asio::io_context io_context;
-                tcp::acceptor acceptor(io_context, tcp::endpoint(asio::ip::address::from_string("127.0.0.1"), 1234));
-                tcp::socket server_socket(io_context);
-                tcp::socket client_socket(io_context);
-
-                // Connect the sockets.
-                acceptor.async_accept(server_socket, std::bind(&noop, "accept"));
-                client_socket.async_connect(acceptor.local_endpoint(), std::bind(&noop, "connect"));
-
-                io_context.run();
-                io_context.reset();
-
-                //  Write a message from socket1 to socket2.
-                std::string test_message = "this is a test message";
-                {
-                    auto header = build_header(test_message);
-
-                    // Gather header and body into a single buffer.
-                    std::array<asio::const_buffer, 2> buffers = {{
-                                                                         asio::buffer(header),
-                                                                         asio::buffer(test_message)
-                                                                 }};
-
-                    // Write header and body to socket.
-                    std::cout << server_socket.is_open() << std::endl;
-                    asio::write(server_socket, buffers);
-                }
-
-                // Read from socket2.
-                {
-                    std::vector<char> buffer;
-
-                    // Read header.
-                    buffer.resize(protocol::header_size);
-                    asio::read(client_socket, asio::buffer(buffer));
-
-                    // Extract body size from header, resize buffer, then read body.
-                    auto body_size = parse_header(buffer);
-                    buffer.resize(body_size);
-                    asio::read(client_socket, asio::buffer(buffer));
-
-                    // Verify body was read.
-                    assert(std::equal(begin(buffer), end(buffer),
-                                      begin(test_message)));
-                    std::cout << "received: \n"
-                                 "  header: " << body_size << "\n"
-                                                              "  body: ";
-                    std::cout.write(&buffer[0], buffer.size());
-                    std::cout << std::endl;
-                }
-            }
-        }
-        // ref:https://zhuanlan.zhihu.com/p/583533338
-        // ref:https://blog.csdn.net/hezhanran/article/details/110665606
     }
+
+    namespace cs {
+        using asio::ip::tcp;
+
+        void start_a_server() {
+            asio::io_context io_context;
+            auto endpoint = tcp::endpoint(asio::ip::address::from_string("127.0.0.1"), 12345);
+            tcp::acceptor acceptor(io_context, endpoint);
+            tcp::socket server_socket(io_context);
+            acceptor.async_accept(server_socket, [&server_socket](const system::error_code& error) {
+                if (!error) {
+                    std::cout << "server: new connect incoming" << std::endl;
+                }
+            });
+            std::cout << "server ready" << std::endl;
+            io_context.run();
+
+            std::array<char, 32> buf{0};
+            // read head
+            asio::read(server_socket, asio::buffer(buf, sizeof(std::size_t)));
+            std::size_t body_size = static_cast<unsigned char>(buf[0]);
+            std::cout << "server: read msg head:" << body_size << std::endl;
+            // read body
+            boost::asio::read(server_socket, asio::buffer(buf, body_size));
+            std::cout << "server: read msg body:" << buf.data() << std::endl;
+        }
+        void test_cs() {
+            std::thread server_t([]{
+                start_a_server();
+            });
+            // start a client
+            asio::io_context io_context;
+            tcp::socket client_socket(io_context);
+            auto endpoint = tcp::endpoint(asio::ip::address::from_string("127.0.0.1"), 12345);
+            client_socket.async_connect(endpoint, [](const system::error_code& error) {
+                if (!error) {
+                    std::cout << "client:connect success" << std::endl;
+                }
+            });
+            io_context.run();
+
+            std::string body = "hello world!";
+            std::size_t body_size = body.size();
+            std::array<char, sizeof(std::size_t)> buf{0};
+            std::memcpy(&buf[0], &body_size, sizeof body_size);
+            std::cout << "client: write msg head" << std::endl;
+            asio::write(client_socket, asio::buffer(buf));
+            std::cout << "client: write msg body" << std::endl;
+            asio::write(client_socket, asio::buffer(body));
+            server_t.join();
+        }
+    }
+    // ref:https://zhuanlan.zhihu.com/p/583533338
+    // ref:https://blog.csdn.net/hezhanran/article/details/110665606
+    // ref:https://zhuanlan.zhihu.com/p/179070263
 
     void test_io() {
         //io_context::test4();
@@ -238,6 +212,6 @@ namespace boost_demo {
         //io_socket::test_dns();
         //io_socket::test_acceptor();
 
-        io_socket::cs::test_cs();
+        cs::test_cs();
     }
 }

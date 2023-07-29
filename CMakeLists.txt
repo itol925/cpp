@@ -14,6 +14,7 @@ set(src
         src/stl/segment.hpp
         src/stl/overload.hpp
         src/stl/template.hpp
+        src/stl/exceptions.hpp
 
         src/boost/io.hpp
 

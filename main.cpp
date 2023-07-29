@@ -7,12 +7,12 @@
 #include "src/stl/overload.hpp"
 
 int main(int argc, char** argv) {
-    //boost_demo::test_io();
+    boost_demo::test_io();
     //continue_demo::test();
 
     //stl::init::init();
     //stl::func::test_func();
     //stl::test_coroutine();
 
-    stl::overload_demo::test();
+    //stl::overload_demo::test();
 }
