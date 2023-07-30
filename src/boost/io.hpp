@@ -158,7 +158,7 @@ namespace boost_demo {
             auto endpoint = tcp::endpoint(asio::ip::address::from_string("127.0.0.1"), 12345);
             tcp::acceptor acceptor(io_context, endpoint);
             tcp::socket server_socket(io_context);
-            acceptor.async_accept(server_socket, [&server_socket](const system::error_code& error) {
+            acceptor.async_accept(server_socket, [](const system::error_code& error) {
                 if (!error) {
                     std::cout << "server: new connect incoming" << std::endl;
                 }
@@ -172,7 +172,7 @@ namespace boost_demo {
             std::size_t body_size = static_cast<unsigned char>(buf[0]);
             std::cout << "server: read msg head:" << body_size << std::endl;
             // read body
-            boost::asio::read(server_socket, asio::buffer(buf, body_size));
+            asio::read(server_socket, asio::buffer(buf, body_size));
             std::cout << "server: read msg body:" << buf.data() << std::endl;
         }
         void test_cs() {

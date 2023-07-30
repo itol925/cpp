@@ -6,8 +6,10 @@
 #include "src/stl/coroutine.hpp"
 #include "src/stl/overload.hpp"
 
+#include "src/demo/cs/test.hpp"
+
 int main(int argc, char** argv) {
-    boost_demo::test_io();
+    //boost_demo::test_io();
     //continue_demo::test();
 
     //stl::init::init();
@@ -15,4 +17,6 @@ int main(int argc, char** argv) {
     //stl::test_coroutine();
 
     //stl::overload_demo::test();
+
+    demo::cs::test_cs();
 }
