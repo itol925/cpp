@@ -24,6 +24,7 @@ set(src
         src/demo/cs/client.hpp
         src/demo/cs/listener.hpp
         src/demo/cs/connection.hpp
+        src/demo/cs/handler.hpp
         src/demo/cs/test.hpp
     )
 
