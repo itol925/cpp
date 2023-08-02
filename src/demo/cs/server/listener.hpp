@@ -25,8 +25,11 @@ namespace demo {
                         handle_accept_connect(key);
                     }).fail([this, key] () {
                         handle_accept_error(key);
+                    }).then([this] {
+                        async_start();
                     });
-                conMap.insert(std::make_pair(std::move(key), std::move(connection)));
+                // todo add lock
+                conMap.insert(std::make_pair(key, std::move(connection)));
             }
         private:
             void handle_accept_connect(Connection* key) {
@@ -35,10 +38,19 @@ namespace demo {
                     std::cout << "not found connection" << std::endl;
                     return;
                 }
-                iter->second->async_start();
+                iter->second->async_start().then([this, key]{
+                    handle_accept_connect(key);
+                }).fail([this, key](const std::exception_ptr& ep){
+                    try {
+                        std::rethrow_exception(ep);
+                    } catch (const std::exception& e) {
+                        std::cout << "connection exception: " << e.what() << std::endl;
+                    }
+                    handle_accept_error(key);
+                });
             }
             void handle_accept_error(Connection* key) {
-                std::cout << "server:error!" << std::endl;
+                conMap.erase(key);
             }
 
         private:

@@ -15,6 +15,7 @@ set(src
         src/stl/overload.hpp
         src/stl/template.hpp
         src/stl/exceptions.hpp
+        src/stl/error.hpp
 
         src/boost/io.hpp
 

@@ -2,7 +2,8 @@
 #define DEMO_CS_CONNECTION_H_H
 
 #include <iostream>
-#include <boost/asio.hpp>
+#include <continuable/continuable.hpp>
+#include <continuable/external/asio.hpp>
 #include "listener.hpp"
 #include "handler.hpp"
 #include "../common/protocol.hpp"
@@ -19,21 +20,30 @@ namespace demo {
                 return socket;
             }
 
-            void async_start() {
-                async_read_request().then([this](std::string request_body){
+            cti::continuable<std::size_t> async_start() {
+                return async_read_request().then([this](std::string request_body){
                     return async_handle_request(request_body);
                 }).then([this](std::string response_body) {
                     return async_write_response(response_body);
-                }).then([this]() {
-                    async_start();
+                }).fail([](const std::exception_ptr& ep){
+                    return cti::make_exceptional_continuable<std::size_t>(ep);
                 });
             }
         private:
             cti::continuable<std::string> async_read_request() {
-                asio::read(socket, asio::buffer(buf, protocol::HEAD_SIZE));
+                boost::system::error_code ec;
+                socket.read_some(asio::buffer(buf, protocol::HEAD_SIZE), ec);
+                if (ec) {
+                    auto ptr = std::make_exception_ptr(std::logic_error("read head failed!"));
+                    return cti::make_exceptional_continuable<std::string>(ptr);
+                }
                 std::size_t body_size = static_cast<unsigned char>(buf[0]);
                 std::cout << "server:read request head:" << body_size << std::endl;
-                asio::read(socket, asio::buffer(buf, body_size));
+                socket.read_some(asio::buffer(buf, body_size), ec);
+                if (ec) {
+                    auto ptr = std::make_exception_ptr(std::logic_error("read body failed!"));
+                    return cti::make_exceptional_continuable<std::string>(ptr);
+                }
                 std::cout << "server:read request body:'" << buf.data() << "'" << std::endl;
                 return cti::make_ready_continuable(buf.data());
             }
@@ -49,7 +59,12 @@ namespace demo {
                 std::cout << "server:write response head:" << body_size << std::endl;
                 buffers.emplace_back(asio::buffer(response_body));
                 std::cout << "server:write response body:'" << response_body << "'" << std::endl;
-                std::size_t write_len = asio::write(socket, buffers);
+                boost::system::error_code ec;
+                std::size_t write_len = socket.write_some(buffers, ec);
+                if (ec) {
+                    auto ptr = std::make_exception_ptr(std::logic_error("write response failed!"));
+                    return cti::make_exceptional_continuable<std::size_t>(ptr);
+                }
                 return cti::make_ready_continuable(write_len);
             }
         private:
