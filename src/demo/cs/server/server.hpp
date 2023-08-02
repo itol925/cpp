@@ -2,7 +2,6 @@
 #define DEMO_CS_SERVER_H_H
 
 #include <iostream>
-#include "client.hpp"
 #include "listener.hpp"
 
 namespace demo {

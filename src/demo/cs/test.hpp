@@ -1,10 +1,13 @@
+#ifndef DEMO_CS_TEST_H_H
+#define DEMO_CS_TEST_H_H
+
 #include <iostream>
-#include "server.hpp"
-#include "client.hpp"
+#include "client/client.hpp"
+#include "server/server.hpp"
 
 namespace demo {
     namespace cs {
-        void test_cs() {
+        void test() {
             std::string ip = "127.0.0.1";
             int port = 10086;
 
@@ -18,3 +21,5 @@ namespace demo {
         }
     }
 }
+
+#endif

@@ -20,11 +20,12 @@ set(src
 
         src/continuable/continuable.hpp
 
-        src/demo/cs/server.hpp
-        src/demo/cs/client.hpp
-        src/demo/cs/listener.hpp
-        src/demo/cs/connection.hpp
-        src/demo/cs/handler.hpp
+        src/demo/cs/common/protocol.hpp
+        src/demo/cs/client/client.hpp
+        src/demo/cs/server/server.hpp
+        src/demo/cs/server/handler.hpp
+        src/demo/cs/server/listener.hpp
+        src/demo/cs/server/connection.hpp
         src/demo/cs/test.hpp
     )
 

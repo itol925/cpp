@@ -5,7 +5,6 @@
 #include "src/stl/function.hpp"
 #include "src/stl/coroutine.hpp"
 #include "src/stl/overload.hpp"
-
 #include "src/demo/cs/test.hpp"
 
 int main(int argc, char** argv) {
@@ -18,5 +17,5 @@ int main(int argc, char** argv) {
 
     //stl::overload_demo::test();
 
-    demo::cs::test_cs();
+    demo::cs::test();
 }
