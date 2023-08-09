@@ -25,6 +25,10 @@ namespace stl {
             std::cout << "1970年1月1日到现在的 毫秒数：" << now_in_mill_seconds.time_since_epoch().count() << std::endl;
             time_point<system_clock, seconds> now_in_seconds = time_point_cast<seconds>(now);
             std::cout << "1970年1月1日到现在的 秒数：" << now_in_seconds.time_since_epoch().count() << std::endl;
+            // add
+            duration<int> duration_sec(100); // 100 秒。注：计时单位默认为 秒
+            auto tp_add = now_in_seconds + duration_sec;
+            std::cout << "1970年1月1日到现在的 秒数+100秒：" << tp_add.time_since_epoch().count() << std::endl;
 
             // 时长
             duration<int> d_sec(100); // 100 秒。注：计时单位默认为 秒
@@ -45,6 +49,8 @@ namespace stl {
             // duration 相加。注：会自动转换成小单位的 duration
             auto d_sum = d_min + d_sec;
             std::cout << d_min.count() << " minutes + " << d_sec.count() << " seconds = " << d_sum.count() << " seconds" << std::endl;
+
+
         }
     }
 }
