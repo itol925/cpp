@@ -1,5 +1,6 @@
 #include <iostream>
 #include <chrono>
+#include <iomanip>
 
 namespace stl {
     namespace chrono_demo {
@@ -50,7 +51,20 @@ namespace stl {
             auto d_sum = d_min + d_sec;
             std::cout << d_min.count() << " minutes + " << d_sec.count() << " seconds = " << d_sum.count() << " seconds" << std::endl;
 
-
+            // time_point 转 字符串
+            std::time_t tt = system_clock::to_time_t(now);   // step1: 将 time_point 转换为 time_t
+            std::tm* tm = std::localtime(&tt);                  // step2: 再转为 tm。即转换为本地时间
+            std::stringstream ss;
+            ss << std::put_time(tm, "%Y-%m-%d %H:%M:%S");   // 再转成 string
+            std::cout << "当前时间：" << ss.str() << std::endl;   // 输出格式如："2023-08-09 23:33:38";
+            // 时间字符串 转 time_point
+            std::string time_str = ss.str();
+            std::tm tm2{};
+            std::istringstream iss(time_str);
+            iss >> std::get_time(&tm2, "%Y-%m-%d %H:%M:%S");     // step1：先转 tm
+            std::time_t tt2 = std::mktime(&tm2);                         // step2：再转成 time_t
+            time_point<system_clock> tp = system_clock::from_time_t(tt2); // step3：再转成 time_point
+            std::cout << "当前时间戳：" << tp.time_since_epoch().count() << std::endl;
         }
     }
 }
