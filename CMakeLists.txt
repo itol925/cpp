@@ -16,6 +16,8 @@ set(src
         src/stl/template.hpp
         src/stl/exceptions.hpp
         src/stl/error.hpp
+        src/stl/smartptr.hpp
+        src/stl/chrono.hpp
 
         src/boost/io.hpp
 

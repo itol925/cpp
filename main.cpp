@@ -6,6 +6,8 @@
 #include "src/stl/coroutine.hpp"
 #include "src/stl/overload.hpp"
 #include "src/demo/cs/test.hpp"
+#include "src/stl/smartptr.hpp"
+#include "src/stl/chrono.hpp"
 
 int main(int argc, char** argv) {
     //boost_demo::test_io();
@@ -17,5 +19,11 @@ int main(int argc, char** argv) {
 
     //stl::overload_demo::test();
 
-    demo::cs::test();
+    //demo::cs::test();
+    //stl::smartPtr::share_ptr_impl::test();
+    //stl::smartPtr::weak_ptr_demo::test();
+
+    //stl::smartPtr::unique_ptr_demo::test();
+    //stl::smartPtr::share_ptr_demo::test();
+    stl::chrono_demo::test();
 }
