@@ -83,10 +83,24 @@ namespace continue_demo {
             work.reset();
             thread_pool.join();
         }
+
+        void test3() {
+            asio::io_context io_context;
+            int* p = nullptr;
+            std::cout << "p:" << p << std::endl;
+            asio::post(io_context, cti::use_continuable).then([p] {
+                // p = new int(1); error! 不能给 copy 变量赋值
+                std::cout << "p2:" << p << std::endl;
+            });
+            std::thread t([&io_context] {
+                io_context.run();
+            });
+            t.join();
+        }
     }
 
     void test() {
-        thread_demo::test2();
+        thread_demo::test3();
     }
 }
 
