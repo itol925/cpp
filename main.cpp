@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
     //continue_demo::test();
 
     //stl::init::init();
-    //stl::func::test_func();
+    stl::func::test();
     //stl::test_coroutine();
 
     //stl::overload_demo::test();
@@ -25,5 +25,5 @@ int main(int argc, char** argv) {
 
     //stl::smartPtr::unique_ptr_demo::test();
     //stl::smartPtr::share_ptr_demo::test();
-    stl::chrono_demo::test();
+    //stl::chrono_demo::test();
 }
