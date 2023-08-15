@@ -8,13 +8,16 @@
 #include "src/demo/cs/test.hpp"
 #include "src/stl/smartptr.hpp"
 #include "src/stl/chrono.hpp"
+#include "src/stl/ref.hpp"
+#include "src/stl/template.hpp"
+#include "src/stl/tools.hpp"
 
 int main(int argc, char** argv) {
     //boost_demo::test_io();
     //continue_demo::test();
 
     //stl::init::init();
-    stl::func::test();
+    //stl::func::test();
     //stl::test_coroutine();
 
     //stl::overload_demo::test();
@@ -26,4 +29,10 @@ int main(int argc, char** argv) {
     //stl::smartPtr::unique_ptr_demo::test();
     //stl::smartPtr::share_ptr_demo::test();
     //stl::chrono_demo::test();
+
+    //stl::ref_demo::test();
+
+    //stl::template_demo::concept_demo::test();
+
+    stl::tools::test();
 }

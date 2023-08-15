@@ -18,6 +18,8 @@ set(src
         src/stl/error.hpp
         src/stl/smartptr.hpp
         src/stl/chrono.hpp
+        src/stl/ref.hpp
+        src/stl/tools.hpp
 
         src/boost/io.hpp
 
