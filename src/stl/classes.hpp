@@ -372,7 +372,7 @@ namespace stl {
             struct C : B, A { };      // operator= 调用 B::operator=，然后调用 A::operator=
             // 但可能只调用一次 V::operator=
 
-            int test() {
+            void test() {
                 C c1, c2;
                 c2 = std::move(c1);
             }
@@ -482,6 +482,41 @@ namespace stl {
             void test2() {
                 // AbstractBase obj;   // 编译错误，纯虚类，不能实例化
                 Derived2 obj;           // OK
+            }
+        }
+
+        namespace virtual_func {
+            class base {
+            public:
+                virtual void virtual_func() {
+                    std::cout << "base.virtual_func" << std::endl;
+                }
+                void func() {
+                    std::cout << "base.func" << std::endl;
+                }
+            };
+
+            class derived : public base {
+            public:
+                void virtual_func() {
+                    std::cout << "derived.virtual_func" << std::endl;
+                }
+                void func() {
+                    std::cout << "derived.func" << std::endl;
+                }
+            };
+
+            void test() {
+                base b;
+                b.virtual_func(); // call base
+                derived d;
+                d.virtual_func(); // call derived
+
+                b = d;
+                b.virtual_func();   // call base
+
+                base* pb = new derived;
+                pb->virtual_func(); // call derived
             }
         }
     }

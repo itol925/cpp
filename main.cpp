@@ -11,6 +11,7 @@
 #include "src/stl/ref.hpp"
 #include "src/stl/template.hpp"
 #include "src/stl/tools.hpp"
+#include "src/stl/classes.hpp"
 
 int main(int argc, char** argv) {
     //boost_demo::test_io();
@@ -34,5 +35,6 @@ int main(int argc, char** argv) {
 
     //stl::template_demo::concept_demo::test();
 
-    stl::tools::test();
+    //stl::tools::test();
+    stl::classes::virtual_func::test();
 }
