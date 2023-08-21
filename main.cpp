@@ -12,6 +12,8 @@
 #include "src/stl/template.hpp"
 #include "src/stl/tools.hpp"
 #include "src/stl/classes.hpp"
+#include "src/leetcode/test1.hpp"
+#include "src/leetcode/sort.hpp"
 
 int main(int argc, char** argv) {
     //boost_demo::test_io();
@@ -36,5 +38,7 @@ int main(int argc, char** argv) {
     //stl::template_demo::concept_demo::test();
 
     //stl::tools::test();
-    stl::classes::virtual_func::test();
+    //stl::classes::virtual_func::test();
+    //leetcode::test();
+    leetcode::sort::test();
 }

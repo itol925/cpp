@@ -32,6 +32,9 @@ set(src
         src/demo/cs/server/listener.hpp
         src/demo/cs/server/connection.hpp
         src/demo/cs/test.hpp
+
+        src/leetcode/test1.hpp
+        src/leetcode/sort.hpp
     )
 
 set(BOOST_ROOT "/opt/homebrew")
