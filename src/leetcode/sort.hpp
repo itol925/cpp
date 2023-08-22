@@ -18,8 +18,8 @@ namespace leetcode {
 
     namespace sort {
         /**
+         * 插入排序
          * https://www.runoob.com/w3cnote/insertion-sort.html
-         * @param v
          */
         void insertion_sort(std::vector<int> v) {
             std::cout << "vec:" << log(v) << std::endl;
@@ -36,8 +36,46 @@ namespace leetcode {
             std::cout << "sort vec:" << log(v) << std::endl;
         }
 
+        /**
+         * 归并排序
+         * https://www.runoob.com/w3cnote/merge-sort.html
+         */
+        void merge(std::vector<int>& arr, int front, int mid, int end) {
+            std::vector<int> left(arr.begin() + front, arr.begin() + mid + 1);
+            std::vector<int> right(arr.begin() + mid + 1, arr.begin() + end + 1);
+            left.insert(left.end(), std::numeric_limits<int>::max());
+            right.insert(right.end(), std::numeric_limits<int>::max());
+
+            int leftIndex = 0, rightIndex = 0;
+            for (int i = front; i <= end; ++i) {
+                if (left[leftIndex] < right[rightIndex]) {
+                    arr[i] = left[leftIndex];
+                    ++leftIndex;
+                } else {
+                    arr[i] = right[rightIndex];
+                    ++rightIndex;
+                }
+            }
+        }
+        void merge_sort(std::vector<int>& arr, int front, int end) {
+            if (front >= end) {
+                return;
+            }
+            int mid = (front + end) / 2;
+            merge_sort(arr, front, mid);
+            merge_sort(arr, mid + 1, end);
+            merge(arr, front, mid, end);
+        }
+
+        void merge_sort(std::vector<int> arr) {
+            std::cout << "vec:" << log(arr) << std::endl;
+            merge_sort(arr, 0, arr.size() - 1);
+            std::cout << "sort vec:" << log(arr) << std::endl;
+        }
         void test() {
-            insertion_sort({2, 1, 3, 4, 2});
+            std::vector<int> arr = {2, 1, 3};
+            //insertion_sort(arr);
+            merge_sort(arr);
         }
     }
 }
