@@ -4,10 +4,10 @@
 #include <sstream>
 
 namespace leetcode {
-    std::string log(const std::vector<int>& v) {
+    std::string log(const std::vector<int> &v) {
         std::ostringstream oss;
         oss << " ";
-        for (int i = 0; i < v.size();  ++i) {
+        for (int i = 0; i < v.size(); ++i) {
             oss << v[i];
             if (i < v.size()) {
                 oss << ", ";
@@ -27,7 +27,7 @@ namespace leetcode {
                 int insert = v[j];  // 待插入元素
                 int i = j - 1;
                 // v[j] 之前比 v[j] 大的元素依次右移，为 v[j] 腾空
-                while(i >= 0 && v[i] > insert) {
+                while (i >= 0 && v[i] > insert) {
                     v[i + 1] = v[i];
                     --i;
                 }
@@ -40,7 +40,7 @@ namespace leetcode {
          * 归并排序
          * https://www.runoob.com/w3cnote/merge-sort.html
          */
-        void merge(std::vector<int>& arr, int front, int mid, int end) {
+        void merge(std::vector<int> &arr, int front, int mid, int end) {
             std::vector<int> left(arr.begin() + front, arr.begin() + mid + 1);
             std::vector<int> right(arr.begin() + mid + 1, arr.begin() + end + 1);
             left.insert(left.end(), std::numeric_limits<int>::max());
@@ -57,7 +57,8 @@ namespace leetcode {
                 }
             }
         }
-        void merge_sort(std::vector<int>& arr, int front, int end) {
+
+        void merge_sort(std::vector<int> &arr, int front, int end) {
             if (front >= end) {
                 return;
             }
@@ -72,6 +73,7 @@ namespace leetcode {
             merge_sort(arr, 0, arr.size() - 1);
             std::cout << "sort vec:" << log(arr) << std::endl;
         }
+
         void test() {
             std::vector<int> arr = {2, 1, 3};
             //insertion_sort(arr);

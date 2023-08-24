@@ -13,13 +13,13 @@ namespace stl {
             struct S {
                 // 非静态成员
                 int n;                // 非静态数据成员
-                int& r;               // 引用类型的非静态数据成员
+                int &r;               // 引用类型的非静态数据成员
                 int a[2] = {1, 2};    // 带默认成员初始化器的非静态数据成员 (C++11)
                 std::string s, *ps;   // 两个非静态数据成员
                 struct NestedS {
                     std::string s;
                 } d5;                 // 具有嵌套类型的非静态数据成员
-                char bit : 2;         // 2 位的位域
+                char bit: 2;         // 2 位的位域
 
                 // 静态成员
                 inline static int n1 = 1;   // 注意，inline 静态成员可以在类中定义
@@ -28,8 +28,8 @@ namespace stl {
                 const static int k;
 
                 // 以下成员也是 常量初始化
-                constexpr static int arr[] = { 1, 2, 3 };        // OK
-                constexpr static std::complex<double> n4 = {1,2}; // OK
+                constexpr static int arr[] = {1, 2, 3};        // OK
+                constexpr static std::complex<double> n4 = {1, 2}; // OK
                 // constexpr static int k; // 错误：constexpr static 要求初始化器
             };
         }
@@ -44,12 +44,14 @@ namespace stl {
                 virtual void mf5() final; // 可为虚函数，可使用 final/override
                 // 构造函数亦是成员函数
                 int data;
+
                 C() : data(12) {}
 
                 // 成员模板
                 template<typename T>
                 void test(const T t);
             };
+
             // 注：函数后面接 volatile 表示该函数可以作用于 volatile 类型的对象。比如：
             static void test_volatile() {
                 C c1;
@@ -62,7 +64,8 @@ namespace stl {
             // 注2: 函数后面接 && 表示函数对象为右值时调用。比如：
             static void test_rvalue() {
                 struct S {
-                    void f() & { std::cout << "lvalue\n"; }
+                    void f() &{ std::cout << "lvalue\n"; }
+
                     void f() &&{ std::cout << "rvalue\n"; }
                 };
 
@@ -88,7 +91,8 @@ namespace stl {
                         nested::x = i;  // OK：可赋值给全局 x
                         y = i;          // OK：可赋值给全局 y
                     }
-                    void g(enclose* p, int i) {
+
+                    void g(enclose *p, int i) {
                         p->x = i; // OK：赋值给 enclose::x
                     }
                 };
@@ -107,24 +111,30 @@ namespace stl {
             // T 是拥有变体成员 M 的非联合类，该成员拥有非平凡默认构造函数，且包含 M 的匿名联合体的变体成员无一拥有默认成员初始化器。
             // T 为 union，且其所有变体成员均为 const。
 
-            struct A{
+            struct A {
                 int x;
-                A(int x = 1): x(x) {} // 用户定义默认构造函数
+
+                A(int x = 1) : x(x) {} // 用户定义默认构造函数
             };
-            struct B: A {  // 隐式定义 B::B()，调用 A::A()
+
+            struct B : A {  // 隐式定义 B::B()，调用 A::A()
             };
             struct C {  // 隐式定义 C::C()，调用 A::A()
                 A a;
             };
-            struct D: A {
-                D(int y): A(y) {} // 不会声明 D::D()，因为存在另一构造函数
+
+            struct D : A {
+                D(int y) : A(y) {} // 不会声明 D::D()，因为存在另一构造函数
             };
-            struct E: A {
-                E(int y): A(y) {}
+
+            struct E : A {
+                E(int y) : A(y) {}
+
                 E() = default; // 显式预置，调用 A::A()
             };
+
             struct F {
-                int& ref;   // 引用成员
+                int &ref;   // 引用成员
                 const int c; // const 成员
                 // F::F() 被隐式定义为弃置
             };
@@ -165,8 +175,10 @@ namespace stl {
 
             struct A {
                 int n;
-                A(int n = 1) : n(n) { }
-                A(const A& a) : n(a.n) { } // 用户定义的复制构造函数
+
+                A(int n = 1) : n(n) {}
+
+                A(const A &a) : n(a.n) {} // 用户定义的复制构造函数
             };
 
             struct B : A {
@@ -175,9 +187,10 @@ namespace stl {
             };
 
             struct C : B {
-                C() : B() { }
+                C() : B() {}
+
             private:
-                C(const C&); // 不可复制，C++98 风格
+                C(const C &); // 不可复制，C++98 风格
             };
 
             int test() {
@@ -218,12 +231,15 @@ namespace stl {
             struct A {
                 std::string s;
                 int k;
-                A() : s("test"), k(-1) { }
-                A(const A& o) : s(o.s), k(o.k) { std::cout << "move failed!\n"; }
-                A(A&& o) noexcept :
+
+                A() : s("test"), k(-1) {}
+
+                A(const A &o) : s(o.s), k(o.k) { std::cout << "move failed!\n"; }
+
+                A(A &&o) noexcept:
                         s(std::move(o.s)),       // 类类型成员的显式移动
                         k(std::exchange(o.k, 0)) // 非类类型成员的显式移动
-                { }
+                {}
             };
 
             A f(A a) {
@@ -240,13 +256,14 @@ namespace stl {
             };
 
             struct C : B {
-                ~C() { } // 析构函数阻止隐式移动构造函数 C::(C&&)
+                ~C() {} // 析构函数阻止隐式移动构造函数 C::(C&&)
             };
 
             struct D : B {
-                D() { }
-                ~D() { }          // 析构函数阻止隐式移动构造函数 D::(D&&)
-                D(D&&) = default; // 强制生成移动构造函数
+                D() {}
+
+                ~D() {}          // 析构函数阻止隐式移动构造函数 D::(D&&)
+                D(D &&) = default; // 强制生成移动构造函数
             };
 
             int test() {
@@ -296,8 +313,9 @@ namespace stl {
             struct A {
                 int n;
                 std::string s1;
+
                 // 用户定义的复制赋值，复制并交换形式
-                A& operator=(A other) {
+                A &operator=(A other) {
                     std::cout << "copy assignment of A\n";
                     std::swap(n, other.n);
                     std::swap(s1, other.s1);
@@ -312,13 +330,14 @@ namespace stl {
             struct C {
                 std::unique_ptr<int[]> data;
                 std::size_t size;
+
                 // 非复制并交换的赋值
-                C& operator=(const C& other) {
+                C &operator=(const C &other) {
                     // 检查自赋值
-                    if(&other == this)
+                    if (&other == this)
                         return *this;
                     // 可能时复用存储
-                    if(size != other.size) {
+                    if (size != other.size) {
                         data.reset(new int[other.size]);
                         size = other.size;
                     }
@@ -361,15 +380,19 @@ namespace stl {
             // 5： T 的每个类类型（或类类型的数组）的非静态数据成员选择的移动赋值运算符都是平凡的；
 
             struct V {
-                V& operator=(V&& other) {
+                V &operator=(V &&other) {
                     // 这可能被调用一或两次
                     // 若调用两次，则 'other' 是刚被移动的 V 子对象
                     return *this;
                 }
             };
-            struct A : virtual V { }; // operator= 调用 V::operator=
-            struct B : virtual V { }; // operator= 调用 V::operator=
-            struct C : B, A { };      // operator= 调用 B::operator=，然后调用 A::operator=
+
+            struct A : virtual V {
+            }; // operator= 调用 V::operator=
+            struct B : virtual V {
+            }; // operator= 调用 V::operator=
+            struct C : B, A {
+            };      // operator= 调用 B::operator=，然后调用 A::operator=
             // 但可能只调用一次 V::operator=
 
             void test() {
@@ -382,15 +405,20 @@ namespace stl {
             // 若仅提供了复制赋值，则所有值类别时都选择它（只要它按值或按到 const 的引用接收其实参），这使得在移动不可用时，以复制赋值成为移动赋值的后备。
             struct A2 {
                 std::string s;
-                A2() : s("test") { }
-                A2(const A2& o) : s(o.s) { std::cout << "move failed!\n"; }
-                A2(A2&& o) : s(std::move(o.s)) { }
-                A2& operator=(const A2& other) {
+
+                A2() : s("test") {}
+
+                A2(const A2 &o) : s(o.s) { std::cout << "move failed!\n"; }
+
+                A2(A2 &&o) : s(std::move(o.s)) {}
+
+                A2 &operator=(const A2 &other) {
                     s = other.s;
                     std::cout << "copy assigned\n";
                     return *this;
                 }
-                A2& operator=(A2&& other) {
+
+                A2 &operator=(A2 &&other) {
                     s = std::move(other.s);
                     std::cout << "move assigned\n";
                     return *this;
@@ -409,13 +437,14 @@ namespace stl {
             };
 
             struct C2 : B2 {
-                ~C2() { } // 析构函数阻止隐式移动赋值
+                ~C2() {} // 析构函数阻止隐式移动赋值
             };
 
             struct D2 : B2 {
-                D2() { }
-                ~D2() { } // 析构函数本会阻止隐式移动赋值
-                D2& operator=(D2&&) = default; // 无论如何都强制移动赋值
+                D2() {}
+
+                ~D2() {} // 析构函数本会阻止隐式移动赋值
+                D2 &operator=(D2 &&) = default; // 无论如何都强制移动赋值
             };
 
             int test2() {
@@ -462,11 +491,13 @@ namespace stl {
             public:
                 virtual ~Base() {}
             };
-            class Derived : public Base {};
+
+            class Derived : public Base {
+            };
 
             // 注：删除基类的指针会引发未定义行为，除非基类的析构函数为虚函数：
             void test() {
-                Base* b = new Derived;
+                Base *b = new Derived;
                 delete b; // 安全
             };
 
@@ -476,8 +507,11 @@ namespace stl {
             public:
                 virtual ~AbstractBase() = 0; // 纯虚函数
             };
+
             AbstractBase::~AbstractBase() {}
-            class Derived2 : public AbstractBase {};
+
+            class Derived2 : public AbstractBase {
+            };
 
             void test2() {
                 // AbstractBase obj;   // 编译错误，纯虚类，不能实例化
@@ -491,6 +525,7 @@ namespace stl {
                 virtual void virtual_func() {
                     std::cout << "base.virtual_func" << std::endl;
                 }
+
                 void func() {
                     std::cout << "base.func" << std::endl;
                 }
@@ -501,6 +536,7 @@ namespace stl {
                 void virtual_func() {
                     std::cout << "derived.virtual_func" << std::endl;
                 }
+
                 void func() {
                     std::cout << "derived.func" << std::endl;
                 }
@@ -515,7 +551,7 @@ namespace stl {
                 b = d;
                 b.virtual_func();   // call base
 
-                base* pb = new derived;
+                base *pb = new derived;
                 pb->virtual_func(); // call derived
             }
         }

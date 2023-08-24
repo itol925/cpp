@@ -11,7 +11,7 @@ namespace stl {
             try {
                 int i = 0;
                 int x = 19 / i;
-            } catch (std::exception& e) {
+            } catch (std::exception &e) {
                 std::cout << "divide zero:" << e.what() << std::endl;
             }
         }
@@ -26,8 +26,8 @@ namespace stl {
                 // 注：数组越界，但[ ] 没有抛出异常的能力，所以不可能会catch到东西
                 char c1 = domain[100];
                 std::cout << c1 << std::endl;
-            }  catch (std::exception e) {
-                std::cout << "will not execute"  << e.what() << std::endl;
+            } catch (std::exception e) {
+                std::cout << "will not execute" << e.what() << std::endl;
             }
         }
 
@@ -38,8 +38,8 @@ namespace stl {
                 // 数组越界，抛出异常
                 char c1 = domain.at(100);
                 std::cout << c1 << std::endl;
-            }  catch (std::exception e) {
-                std::cout << "throw by std::string:"  << e.what() << std::endl;
+            } catch (std::exception e) {
+                std::cout << "throw by std::string:" << e.what() << std::endl;
 
                 eptr = std::current_exception();
             }
@@ -53,14 +53,14 @@ namespace stl {
             std::string domain = "www.baidu.com";
             try {
                 throw "this is an exception";
-            }  catch (const char* e) {
+            } catch (const char *e) {
                 std::cout << "throw string:" << e << std::endl;
             }
 
             int i = 0;
             try {
                 throw i;
-            } catch (const int& e) {
+            } catch (const int &e) {
                 std::cout << "throw int:" << e << std::endl;
             }
         }
@@ -72,7 +72,7 @@ namespace stl {
         exception_demo::no_throw();
         try {
             exception_demo::throw_by_string();
-        } catch (std::exception& e) {
+        } catch (std::exception &e) {
             std::cout << "rethrow" << e.what() << std::endl;
         }
         exception_demo::throw_manual();

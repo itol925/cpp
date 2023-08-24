@@ -40,14 +40,14 @@ namespace stl {
                 std::cout << "num:" << i << std::endl;
             }
 
-            void print_num2(int i, int k, const int& j) {
+            void print_num2(int i, int k, const int &j) {
                 std::cout << "num2:" << i << "," << k << "," << j << std::endl;
             }
 
             struct Obj {
             public:
                 void print(int i) {
-                    std::cout << "num:" << i <<std::endl;
+                    std::cout << "num:" << i << std::endl;
                 }
             };
 
@@ -72,13 +72,38 @@ namespace stl {
 
                 using namespace std::placeholders;
                 int n = 17;
-                std::function<void(int,int,const int&)> f6 = std::bind(print_num2, 15, _2, std::cref(n));
+                std::function<void(int, int, const int &)> f6 = std::bind(print_num2, 15, _2, std::cref(n));
                 f6(0, 16, n);
             }
         }
 
+        namespace function_template {
+            template<typename F, typename... Args>
+            void my_post(F &&f, Args &&... args) {
+                std::function<void(Args...)> func(std::forward<F>(f));
+                func(std::forward<Args>(args)...);
+            }
+
+            void my_function(int a, int b) {
+                std::cout << a + b << std::endl;
+            }
+
+            void my_function2(int a, int b, int c) {
+                std::cout << a + b + c << std::endl;
+            }
+
+            void test() {
+                my_post(my_function, 3, 4);
+                my_post(my_function2, 3, 4, 5);
+                my_post([]() {
+                    std::cout << "ok" << std::endl;
+                });
+            }
+        }
+
         void test() {
-            function_demo::test();
+            //function_demo::test();
+            function_template::test();
         }
     }
 }

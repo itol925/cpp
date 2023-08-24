@@ -11,24 +11,26 @@
 namespace demo {
     namespace cs {
         using namespace boost;
+
         class Connection {
         public:
-            explicit Connection(asio::io_context& ctx)
-            : socket(asio::make_strand(ctx)) {}
+            explicit Connection(asio::io_context &ctx)
+                    : socket(asio::make_strand(ctx)) {}
 
-            asio::ip::tcp::socket& get_socket() {
+            asio::ip::tcp::socket &get_socket() {
                 return socket;
             }
 
             cti::continuable<std::size_t> async_start() {
-                return async_read_request().then([this](std::string request_body){
+                return async_read_request().then([this](std::string request_body) {
                     return async_handle_request(request_body);
                 }).then([this](std::string response_body) {
                     return async_write_response(response_body);
-                }).fail([](const std::exception_ptr& ep){
+                }).fail([](const std::exception_ptr &ep) {
                     return cti::make_exceptional_continuable<std::size_t>(ep);
                 });
             }
+
         private:
             cti::continuable<std::string> async_read_request() {
                 boost::system::error_code ec;
@@ -47,12 +49,14 @@ namespace demo {
                 std::cout << "server:read request body:'" << buf.data() << "'" << std::endl;
                 return cti::make_ready_continuable(buf.data());
             }
-            cti::continuable<std::string> async_handle_request(std::string& request_body) {
+
+            cti::continuable<std::string> async_handle_request(std::string &request_body) {
                 std::string response_body = handler.handle_request(request_body);
                 std::cout << "server:handle request and response:'" << response_body << "'" << std::endl;
                 return cti::make_ready_continuable(response_body);
             }
-            cti::continuable<std::size_t> async_write_response(std::string& response_body) {
+
+            cti::continuable<std::size_t> async_write_response(std::string &response_body) {
                 std::vector<asio::const_buffer> buffers;
                 std::size_t body_size = response_body.size();
                 buffers.emplace_back(asio::buffer(&body_size, protocol::HEAD_SIZE));
@@ -67,6 +71,7 @@ namespace demo {
                 }
                 return cti::make_ready_continuable(write_len);
             }
+
         private:
             Handler handler;
             asio::ip::tcp::socket socket;

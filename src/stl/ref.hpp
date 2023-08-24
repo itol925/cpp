@@ -10,7 +10,7 @@ namespace stl {
 
         void test_left_ref() {
             int a = 1;
-            int& b = a;
+            int &b = a;
             add(b); // 因为模板传入的是个 value，所以 add 操作不会影响到 a 和 b
             std::cout << "b:" << b << " a:" << a << std::endl;
 
@@ -18,9 +18,10 @@ namespace stl {
             std::cout << "ref. b:" << b << " a:" << a << std::endl;
         }
 
-        void add2(int&& a) {
+        void add2(int &&a) {
             ++a;
         }
+
         void test_right_ref() {
             int a2 = 1;
             add2(std::move(a2)); // 右值传递，受 add2 影响
@@ -43,19 +44,20 @@ namespace stl {
         // 引用坍缩
         // 注：除了 右值引用右值（right_ref&&）坍缩成右值引用外，其他都是坍缩成左值引用
         void test_ref_collapsing() {
-            typedef int&  left_ref;
-            typedef int&& right_ref;
+            typedef int &left_ref;
+            typedef int &&right_ref;
             int n = 1;
-            left_ref& r1 = n;   // r1 是 int&
-            left_ref&& r2 = n; // r2 的类型是 int&
-            right_ref&  r3 = n; // r3 的类型是 int&
-            right_ref&& r4 = 1; // r4 的类型是 int&&
+            left_ref &r1 = n;   // r1 是 int&
+            left_ref &&r2 = n; // r2 的类型是 int&
+            right_ref &r3 = n; // r3 的类型是 int&
+            right_ref &&r4 = 1; // r4 的类型是 int&&
         }
 
         // 左值表达式。当函数的返回值是左值引用时，函数调用表达式成为
-        char& char_number(std::string& s, std::size_t n) {
+        char &char_number(std::string &s, std::size_t n) {
             return s.at(n); // string::at() 返回 char 的引用
         }
+
         void test_lefg_expression() {
             std::string s = "abc";
             char_number(s, 0) = 'b';
@@ -63,24 +65,28 @@ namespace stl {
         }
 
         // forward 完美转发
-        void foo(int& a) {
+        void foo(int &a) {
             ++a;
             std::cout << "left value" << std::endl;
         }
-        void foo(int&& a) {
+
+        void foo(int &&a) {
             ++a;
             std::cout << "right value" << std::endl;
         }
-        void foo(const int& a) {
+
+        void foo(const int &a) {
             std::cout << "const left value" << std::endl;
         }
+
         template<typename T>
-        void do_forward(T&& arg) {
+        void do_forward(T &&arg) {
             foo(std::forward<T>(arg));
         }
+
         void test_forward() {
             int n = 1;
-            int& n2 = n;
+            int &n2 = n;
             const int n3 = 1;
             do_forward(n);
             std::cout << "n=" << n << std::endl;

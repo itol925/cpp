@@ -14,11 +14,12 @@ namespace stl {
 
         class ErrorCategory : public std::error_category {
         public:
-            const char* name() const noexcept override {
+            const char *name() const noexcept override {
                 return "ErrorCategory";
             }
+
             std::string message(int ev) const override {
-                switch(static_cast<ErrorCode>(ev)) {
+                switch (static_cast<ErrorCode>(ev)) {
                     case ErrorCode::success:
                         return "success";
                     case ErrorCode::read_head_failed:
@@ -31,7 +32,7 @@ namespace stl {
             }
         };
 
-        const ErrorCategory& getErrorCategory() {
+        const ErrorCategory &getErrorCategory() {
             static ErrorCategory inst;
             return inst;
         }

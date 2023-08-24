@@ -89,6 +89,7 @@ namespace stl {
             struct Future {
                 struct promise_type {
                     promise_type() { std::cout << "promise_type created\n"; }
+
                     ~promise_type() { std::cout << "promise_type died\n"; }
 
                     auto get_return_object() { //get return object
@@ -123,6 +124,7 @@ namespace stl {
                     void unhandled_exception() { //exception handler
                         std::exit(1);
                     }
+
                     T value;
                 };
 
@@ -140,6 +142,7 @@ namespace stl {
 
             struct AwaiableObj {
                 int a = 0;
+
                 bool await_ready() {
                     std::cout << "await_ready called\n";
                     return true;
@@ -153,7 +156,7 @@ namespace stl {
                     // return awaiting_handle;
                 }
 
-                auto await_resume(){
+                auto await_resume() {
                     std::cout << "await_resume called\n";
                     return a++;
                 }
@@ -189,17 +192,22 @@ namespace stl {
             struct Future {
                 struct promise_type {
                     suspend_never initial_suspend() { return {}; }
+
                     suspend_never final_suspend() noexcept { return {}; }
+
                     suspend_always yield_value(int v) {
                         std::cout << "coroutine task: call yield_value " << v << std::endl;
                         return {};
                     }
+
                     void return_value(int r) {
                         std::cout << "coroutine task: call return_value " << r << std::endl;
                     }
+
                     Future get_return_object() {
                         return {coroutine_handle<promise_type>::from_promise(*this)};
                     }
+
                     void unhandled_exception() {}
                 };
 
@@ -216,7 +224,7 @@ namespace stl {
                     std::cout << "coroutine: call await_suspend" << std::endl;
                 }
 
-                int await_resume(){
+                int await_resume() {
                     std::cout << "coroutine: call await_resume" << std::endl;
                     return 11;
                 }
@@ -250,15 +258,20 @@ namespace stl {
             struct Task {
                 struct promise_type {
                     suspend_never initial_suspend() { return {}; }
+
                     suspend_never final_suspend() noexcept { return {}; }
+
                     suspend_always yield_value(int v) {
                         queue.push(v);
                         return {};
                     }
+
                     Task get_return_object() {
                         return {coroutine_handle<promise_type>::from_promise(*this)};
                     }
+
                     void unhandled_exception() {}
+
                     void return_void() {}
                 };
 
@@ -267,8 +280,10 @@ namespace stl {
 
             struct Producer {
                 bool await_ready() { return false; }
+
                 void await_suspend(coroutine_handle<> awaiting_handle) {}
-                void await_resume(){}
+
+                void await_resume() {}
             };
 
             Task produce() {
@@ -282,7 +297,7 @@ namespace stl {
             void consume() {
                 auto p = produce();
                 p.handle.resume();
-                while(!queue.empty()) {
+                while (!queue.empty()) {
                     int v = queue.front();
                     queue.pop();
                     std::cout << "consumed val:" << v << std::endl;
@@ -300,16 +315,22 @@ namespace stl {
                 struct promise_type {
                     int _out;
                     int _res;
-                    suspend_never initial_suspend() {return {};}
-                    suspend_always final_suspend() noexcept {return {};}
+
+                    suspend_never initial_suspend() { return {}; }
+
+                    suspend_always final_suspend() noexcept { return {}; }
+
                     void unhandled_exception() {}
+
                     CoRet get_return_object() {
                         return {coroutine_handle<promise_type>::from_promise(*this)};
                     }
+
                     suspend_always yield_value(int r) {
                         _out = r;
                         return {};
                     }
+
                     void return_value(int r) {
                         _res = r;
                     }
@@ -317,28 +338,36 @@ namespace stl {
 
                 coroutine_handle<promise_type> _h; // _h.resume(), _h()
             };
-            struct Note { int guess; };
+            struct Note {
+                int guess;
+            };
+
             struct Input {
-                Note& _in;
+                Note &_in;
+
                 bool await_ready() { return false; }
+
                 void await_suspend(coroutine_handle<CoRet::promise_type> h) {}
+
                 int await_resume() { return _in.guess; }
             };
-            CoRet Guess(Note& note) {
+
+            CoRet Guess(Note &note) {
                 // CoRet::promise_type promise;
                 // CoRet ret = promise.get_return_object();
                 // co_await promise.initial_suspend();
-                int res = (rand()%30)+1;
+                int res = (rand() % 30) + 1;
                 Input input{note};
                 int g = co_await input;
                 std::cout << "coroutine: You guess " << g << std::endl;
 
-                co_yield (res>g ? 1: (res == g? 0 : -1));
+                co_yield (res > g ? 1 : (res == g ? 0 : -1));
                 // co_await promise.yield_value()
 
                 co_return res;
                 // co_await promise.final_suspend();
             }
+
             void test_demo4() {
                 srand(time(nullptr));
                 Note note;
@@ -347,13 +376,13 @@ namespace stl {
                 note.guess = 10;
                 ret._h.resume(); // resume from co_await
                 std::cout << "main: result is " <<
-                     ((ret._h.promise()._out == 1) ? "larger" :
-                      ((ret._h.promise()._out == 0) ? "the same" : "smaller"))
-                     << std::endl;
+                          ((ret._h.promise()._out == 1) ? "larger" :
+                           ((ret._h.promise()._out == 0) ? "the same" : "smaller"))
+                          << std::endl;
 
                 ret._h.resume(); // resume from co_yield
-                if(ret._h.done()) {
-                    std::cout << "main: the result is " <<  ret._h.promise()._res << std::endl;
+                if (ret._h.done()) {
+                    std::cout << "main: the result is " << ret._h.promise()._res << std::endl;
                 }
             }
         }

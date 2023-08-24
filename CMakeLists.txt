@@ -23,7 +23,9 @@ set(src
 
         src/boost/io.hpp
 
-        src/continuable/continuable.hpp
+        src/boost/threadPool.hpp
+        src/boost/continuable.hpp
+        src/common/common.hpp
 
         src/demo/cs/common/protocol.hpp
         src/demo/cs/client/client.hpp

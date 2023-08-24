@@ -49,11 +49,12 @@ namespace stl {
             std::cout << "1 hour = " << m2.count() << " minutes" << std::endl;
             // duration 相加。注：会自动转换成小单位的 duration
             auto d_sum = d_min + d_sec;
-            std::cout << d_min.count() << " minutes + " << d_sec.count() << " seconds = " << d_sum.count() << " seconds" << std::endl;
+            std::cout << d_min.count() << " minutes + " << d_sec.count() << " seconds = " << d_sum.count() << " seconds"
+                      << std::endl;
 
             // time_point 转 字符串
             std::time_t tt = system_clock::to_time_t(now);   // step1: 将 time_point 转换为 time_t
-            std::tm* tm = std::localtime(&tt);                  // step2: 再转为 tm。即转换为本地时间
+            std::tm *tm = std::localtime(&tt);                  // step2: 再转为 tm。即转换为本地时间
             std::stringstream ss;
             ss << std::put_time(tm, "%Y-%m-%d %H:%M:%S");   // 再转成 string
             std::cout << "当前时间：" << ss.str() << std::endl;   // 输出格式如："2023-08-09 23:33:38";
