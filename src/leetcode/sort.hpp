@@ -74,10 +74,34 @@ namespace leetcode {
             std::cout << "sort vec:" << log(arr) << std::endl;
         }
 
+        /**
+         * 最大子数组
+         * 暴力解析
+         */
+         void max_sub_arr() {
+             std::vector<int> arr = {1, 3, -2, 4, 5, 6, -7, 3, 2, 11};
+             int max_sum = INT32_MIN;
+             int sum = 0;
+             for (int i = 0; i < arr.size(); ++i) {
+                 sum = arr[i];
+                 for (int j = i + 1; j < arr.size(); j++) {
+                     if (arr[j] < 0) {
+                         break;
+                     }
+                     sum += arr[j];
+                     if (sum > max_sum) {
+                         max_sum = sum;
+                     }
+                 }
+             }
+             std::cout << "max_sum:" << max_sum << std::endl;
+         }
+
         void test() {
             std::vector<int> arr = {2, 1, 3};
             //insertion_sort(arr);
-            merge_sort(arr);
+            //merge_sort(arr);
+            max_sub_arr();
         }
     }
 }

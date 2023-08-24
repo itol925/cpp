@@ -41,6 +41,6 @@ int main(int argc, char** argv) {
     //stl::tools::test();
     //stl::classes::virtual_func::test();
     //leetcode::test();
-    //leetcode::sort::test();
-    thread_demo::test();
+    leetcode::sort::test();
+    //thread_demo::test();
 }
