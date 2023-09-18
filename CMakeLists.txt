@@ -20,6 +20,7 @@ set(src
         src/stl/chrono.hpp
         src/stl/ref.hpp
         src/stl/tools.hpp
+        src/stl/ptr.hpp
 
         src/boost/io.hpp
 
@@ -34,6 +35,7 @@ set(src
         src/demo/cs/server/listener.hpp
         src/demo/cs/server/connection.hpp
         src/demo/cs/test.hpp
+        src/demo/transaction/transaction.hpp
 
         src/leetcode/test1.hpp
         src/leetcode/sort.hpp
