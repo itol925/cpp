@@ -20,6 +20,7 @@ set(src
         src/stl/chrono.hpp
         src/stl/ref.hpp
         src/stl/tools.hpp
+        src/stl/ptr.hpp
 
         src/boost/io.hpp
 

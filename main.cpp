@@ -16,6 +16,7 @@
 #include "src/leetcode/test1.hpp"
 #include "src/leetcode/sort.hpp"
 #include "src/boost/threadPool.hpp"
+#include "src/stl/ptr.hpp"
 
 int main(int argc, char** argv) {
     //boost_demo::test_io();
@@ -34,7 +35,7 @@ int main(int argc, char** argv) {
     //stl::smartPtr::unique_ptr_demo::test();
     //stl::smartPtr::share_ptr_demo::test();
     //stl::chrono_demo::test();
-//    demo::trans::test();
+    //demo::trans::test();
     //stl::chrono_demo::test();
 
     //stl::ref_demo::test();
@@ -44,6 +45,8 @@ int main(int argc, char** argv) {
     //stl::tools::test();
     //stl::classes::virtual_func::test();
     //leetcode::test();
-    leetcode::sort::test();
+    // leetcode::sort::test();
     //thread_demo::test();
+
+    stl::ptr::test();
 }
