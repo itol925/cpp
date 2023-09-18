@@ -11,7 +11,8 @@ namespace stl {
             // 用户自定义转换函数
             struct X {
                 explicit operator int() { return 7; }
-                explicit operator int*() { return nullptr; }
+
+                explicit operator int *() { return nullptr; }
             };
 
             void test_user_define_conversion() {
@@ -49,8 +50,10 @@ namespace stl {
             // 提供数组式访问并同时允许读写的用户定义类，典型地为 operator[] 定义两个重载：const 和非 const 变体
             struct T {
                 std::vector<int> myVector;
-                int& operator[](std::size_t idx)       { return myVector[idx]; }
-                const int& operator[](std::size_t idx) const { return myVector[idx]; }
+
+                int &operator[](std::size_t idx) { return myVector[idx]; }
+
+                const int &operator[](std::size_t idx) const { return myVector[idx]; }
             };
         }
 

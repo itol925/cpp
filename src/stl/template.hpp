@@ -9,47 +9,54 @@ namespace stl {
             // demo1
             // 通过 concept 关键字定义了 Hashable 这个概念，Hashable 要求 T 的对象必须满足能够被转换成 size_t 对象
             template<typename T>
-            concept Hashable = requires(T a) {
-                { std::hash<T>{}(a) } -> std::convertible_to<std::size_t>;
-            };
-            // 用概念来约束 template
-            // 1：形式一
+            concept Hashable = std::is_convertible_v<T, std::size_t>;
+
+            //concept Hashable = requires(T a) {
+            //    { std::hash<T>{}(a) } -> std::convertible_to<std::size_t>;
+            //};
             template<Hashable T>
-            std::size_t func(T a) {
+            // 1：形式一
+            std::size_t hashtable1(T a) {
                 return static_cast<std::size_t>(a);
             }
-            // 2：形式2
+
             template<typename T>
-            std::size_t func2(T a) requires Hashable<T> {
+            // 2：形式2
+            std::size_t hashtable2(T a) requires Hashable<T> {
                 return static_cast<std::size_t>(a);
             }
-            // use template
+
             void test_hashable() {
-                func(12);   // OK
-                func(21.0); // OK
+                hashtable1(12);   // OK
+                hashtable2(21.0); // OK
                 //func("abc");// Error.
             }
 
             // demo2
-            // 定义概念
+            // 定义一个只能是整数类型的concept，整数类型包括 char, unsigned char, short, ushort, int, unsinged int, long等。
             template<typename T>
-            //concept Integral = std::is_integral<T>::value;
-            concept Integral = requires (T a) {
-                std::is_integral<T>(a);
-            };
-            // 应用概念到 template 上。形式1
+            concept Integral = std::is_integral_v<T>;
+
             template<Integral T>
-            void func_int(T t) {}
-            // 应用概念 形式2
-            template<typename T>
-            void func_int2(T t) requires Integral<T> {}
+            T integral_add(T t1, T t2) {
+                return t1 + t2;
+            }
+
+            void test_integral() {
+                int a = integral_add(1, 2);
+                std::cout << "integral_add:" << a << std::endl;
+            }
 
             // demo3
-            class Base {};
-            template <class T, class U>
+            class Base {
+            };
+
+            template<class T, class U>
             concept Derived = std::is_base_of<U, T>::value;
+
             template<Derived<Base> T>
             void func_derived(T);
+
             template<typename T, typename U>
             void func_derived2(T) requires Derived<U, T>;
 
@@ -62,12 +69,34 @@ namespace stl {
             // 定义偶数
             template<typename T>
             concept EvenNumber = requires(T a) {
-                std::is_integral(a) && a % 2 == 0;
+                { a % 2 == 0 } -> std::same_as<bool>;
             };
 
+            template<EvenNumber T>
+            void test_even_number(T t) {
+                std::cout << "t is even number" << std::endl;
+            }
+
+            void test() {
+                test_integral();
+                test_hashable();
+                test_even_number(2);
+                test_even_number(1);
+                //double d = add(1.0, 2.0); error! 1.0 不是整数
+            }
+
+            // 推断出返回值的类型
+            template<typename T, typename U>
+            auto add(T t, U u) -> decltype(t + u) {
+                return t + u;
+            }
+
             // trait
-            class dog {};
-            class flower {};
+            class dog {
+            };
+
+            class flower {
+            };
 
             /**
              * 定义 区分 animal 的 trait

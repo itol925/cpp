@@ -9,7 +9,7 @@ namespace demo {
     namespace cs {
         class Handler {
         public:
-            std::string handle_request(const std::string& request) {
+            std::string handle_request(const std::string &request) {
                 return "echo:" + request;
             }
         };

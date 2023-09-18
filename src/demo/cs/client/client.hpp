@@ -8,10 +8,12 @@
 namespace demo {
     namespace cs {
         using namespace boost;
+
         class Client {
         public:
             Client() : socket(io_context) {}
-            void start(std::string& ip, int port) {
+
+            void start(std::string &ip, int port) {
                 auto endpoint = asio::ip::tcp::endpoint(asio::ip::address::from_string(ip), port);
                 std::cout << "put your cmd:";
                 do {
@@ -38,10 +40,12 @@ namespace demo {
                     }
                 } while (true);
             }
+
         private:
             asio::io_context io_context;
             asio::ip::tcp::socket socket;
-            void send_request(std::string& body) {
+
+            void send_request(std::string &body) {
                 std::vector<asio::const_buffer> buffers;
                 std::size_t body_size = body.size();
                 std::cout << "client: write request head:" << body_size << std::endl;
@@ -50,6 +54,7 @@ namespace demo {
                 buffers.emplace_back(asio::buffer(body));
                 asio::write(socket, buffers);
             }
+
             void read_response() {
                 std::array<char, 32> buf{0};
                 // read head

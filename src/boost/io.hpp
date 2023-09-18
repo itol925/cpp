@@ -29,7 +29,7 @@ namespace boost_demo {
             asio::io_context io_context;
             io_context.post(handler);
 
-            io_context.post([]{
+            io_context.post([] {
                 std::this_thread::sleep_for(std::chrono::seconds(1));
                 std::cout << "task2 done" << std::endl;
             });
@@ -41,10 +41,10 @@ namespace boost_demo {
 
         void test2() {
             asio::io_context io_context;
-            io_context.post([]{
+            io_context.post([] {
                 std::cout << "task1 done" << std::endl;
             });
-            io_context.post([]{
+            io_context.post([] {
                 std::cout << "task2 done" << std::endl;
             });
             // work_guard 给 io_context 任务数加 1，所以只要 work_guard 不 reset，io_context.run 是不会返回的。相当于 hold 住了 io_context
@@ -64,10 +64,10 @@ namespace boost_demo {
 
         void test3() {
             asio::io_context io_context;
-            io_context.post([]{
+            io_context.post([] {
                 std::cout << "task done" << std::endl;
             });
-            io_context.post([]{
+            io_context.post([] {
                 std::cout << "task2 done" << std::endl;
             });
             asio::io_context::work work(io_context); // work 析构时，允许 io_context.run 返回
@@ -104,8 +104,8 @@ namespace boost_demo {
     }
 
     namespace io_socket {
-        void connect_handler(const std::error_code& ec){
-            if(!ec) {
+        void connect_handler(const std::error_code &ec) {
+            if (!ec) {
                 std::cout << "Connect success" << std::endl;
             }
         }
@@ -143,7 +143,7 @@ namespace boost_demo {
             //max_listen_connections: 待处理连接队列的最大长度。
             //此函数将套接字接受器置于可以接受新连接的状态。
             acceptor.listen(asio::socket_base::max_listen_connections, ec);
-            if(!ec) {
+            if (!ec) {
                 std::cout << "listen success" << std::endl;
             }
             io_context.run();
@@ -158,7 +158,7 @@ namespace boost_demo {
             auto endpoint = tcp::endpoint(asio::ip::address::from_string("127.0.0.1"), 12345);
             tcp::acceptor acceptor(io_context, endpoint);
             tcp::socket server_socket(io_context);
-            acceptor.async_accept(server_socket, [](const system::error_code& error) {
+            acceptor.async_accept(server_socket, [](const system::error_code &error) {
                 if (!error) {
                     std::cout << "server: new connect incoming" << std::endl;
                 }
@@ -175,15 +175,16 @@ namespace boost_demo {
             asio::read(server_socket, asio::buffer(buf, body_size));
             std::cout << "server: read msg body:" << buf.data() << std::endl;
         }
+
         void test_cs() {
-            std::thread server_t([]{
+            std::thread server_t([] {
                 start_a_server();
             });
             // start a client
             asio::io_context io_context;
             tcp::socket client_socket(io_context);
             auto endpoint = tcp::endpoint(asio::ip::address::from_string("127.0.0.1"), 12345);
-            client_socket.async_connect(endpoint, [](const system::error_code& error) {
+            client_socket.async_connect(endpoint, [](const system::error_code &error) {
                 if (!error) {
                     std::cout << "client:connect success" << std::endl;
                 }

@@ -18,10 +18,14 @@ set(src
         src/stl/error.hpp
         src/stl/smartptr.hpp
         src/stl/chrono.hpp
+        src/stl/ref.hpp
+        src/stl/tools.hpp
 
         src/boost/io.hpp
 
-        src/continuable/continuable.hpp
+        src/boost/threadPool.hpp
+        src/boost/continuable.hpp
+        src/common/common.hpp
 
         src/demo/cs/common/protocol.hpp
         src/demo/cs/client/client.hpp
@@ -31,6 +35,9 @@ set(src
         src/demo/cs/server/connection.hpp
         src/demo/cs/test.hpp
         src/demo/transaction/transaction.hpp
+
+        src/leetcode/test1.hpp
+        src/leetcode/sort.hpp
     )
 
 set(BOOST_ROOT "/opt/homebrew")
