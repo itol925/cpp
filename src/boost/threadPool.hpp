@@ -76,23 +76,27 @@ namespace thread_demo {
         std::size_t nextIOContext_;
     };
 
+    void f1() {
+        std::cout << "void func" << std::endl;
+    }
     void test() {
-        //ThreadPool pool(5);
-        //for (int i = 0; i < 10; ++i) {
-        //    pool.post([i] {
-        //        std::this_thread::sleep_for(std::chrono::milliseconds(common::random(100, 1000)));
-        //        std::cout << std::this_thread::get_id() << ".task." << i << std::endl;
-        //    });
-        //}
-
-        ThreadPool2 pool2(5);
+        ThreadPool pool(5);
         for (int i = 0; i < 10; ++i) {
-            asio::post(pool2.getIOContext(), [i] {
+            pool.post([i] {
                 std::this_thread::sleep_for(std::chrono::milliseconds(common::random(100, 1000)));
-                std::cout << std::this_thread::get_id() << ".task1." << i << std::endl;
+                std::cout << std::this_thread::get_id() << ".task." << i << std::endl;
             });
         }
-        pool2.stop();
+        pool.post(f1);
+
+        //ThreadPool2 pool2(5);
+        //for (int i = 0; i < 10; ++i) {
+        //    asio::post(pool2.getIOContext(), [i] {
+        //        std::this_thread::sleep_for(std::chrono::milliseconds(common::random(100, 1000)));
+        //        std::cout << std::this_thread::get_id() << ".task1." << i << std::endl;
+        //    });
+        //}
+        //pool2.stop();
 
 
         //asio::thread_pool thread_pool(5);
