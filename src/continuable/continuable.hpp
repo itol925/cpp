@@ -84,7 +84,28 @@ namespace continue_demo {
             thread_pool.join();
         }
 
+        cti::continuable<> void_func() {
+            std::cout << "void_func" << std::endl;
+            return cti::make_ready_continuable();
+        }
+        cti::continuable<int> int_func() {
+            std::cout << "int_func" << std::endl;
+            return cti::make_ready_continuable(1);
+        }
         void test3() {
+            asio::io_context io_context;
+            asio::post(io_context, cti::use_continuable).then([] {
+                return void_func().then([](){
+                    return int_func();
+                });
+            });
+            std::thread t([&io_context] {
+                io_context.run();
+            });
+            t.join();
+        }
+
+        void test4() {
             asio::io_context io_context;
             int* p = nullptr;
             std::cout << "p:" << p << std::endl;

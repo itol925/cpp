@@ -96,9 +96,20 @@ namespace stl::smartPtr {
                 t1.join();
                 t2.join();
                 std::cout << "int_p:" << *int_p << std::endl;
+
+                char* text = "hello world";
+                auto sbb_ptr = std::make_shared<std::string>(text);
+                char* s = const_cast<char *>(sbb_ptr->c_str());
             }
             void test2() {
                 //std::atomic<std::shared_ptr<long>> instance;
+                std::cout << "test2" << std::endl;
+            }
+            void test3() {
+                std::cout << "test3" << std::endl;
+                int a = 10;
+                auto p = std::make_shared<int>(a);
+                std::cout << "use_count:" << p.use_count() << std::endl;
             }
         }
 

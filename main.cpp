@@ -8,10 +8,11 @@
 #include "src/demo/cs/test.hpp"
 #include "src/stl/smartptr.hpp"
 #include "src/stl/chrono.hpp"
+#include "src/demo/transaction/transaction.hpp"
 
 int main(int argc, char** argv) {
     //boost_demo::test_io();
-    //continue_demo::test();
+//    continue_demo::test();
 
     //stl::init::init();
     //stl::func::test_func();
@@ -22,8 +23,11 @@ int main(int argc, char** argv) {
     //demo::cs::test();
     //stl::smartPtr::share_ptr_impl::test();
     //stl::smartPtr::weak_ptr_demo::test();
+    stl::smartPtr::share_ptr_demo::test3();
+    stl::smartPtr::share_ptr_demo::test2();
 
     //stl::smartPtr::unique_ptr_demo::test();
     //stl::smartPtr::share_ptr_demo::test();
-    stl::chrono_demo::test();
+    //stl::chrono_demo::test();
+//    demo::trans::test();
 }

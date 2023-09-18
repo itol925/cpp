@@ -30,6 +30,7 @@ set(src
         src/demo/cs/server/listener.hpp
         src/demo/cs/server/connection.hpp
         src/demo/cs/test.hpp
+        src/demo/transaction/transaction.hpp
     )
 
 set(BOOST_ROOT "/opt/homebrew")
