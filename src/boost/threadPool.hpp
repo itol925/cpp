@@ -2,7 +2,7 @@
 #include <boost/asio.hpp>
 #include <memory>
 #include <vector>
-#include "../common/common.hpp"
+#include "common/common.hpp"
 
 namespace thread_demo {
     using namespace boost;

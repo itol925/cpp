@@ -21,6 +21,7 @@ set(src
         src/stl/ref.hpp
         src/stl/tools.hpp
         src/stl/ptr.hpp
+        src/stl/condition.hpp
 
         src/boost/io.hpp
         src/boost/threadPool.hpp
@@ -44,6 +45,7 @@ set(src
 
 set(BOOST_ROOT "/opt/homebrew")
 find_package(Boost REQUIRED)
+include_directories(src)
 include_directories(${Boost_INCLUDE_DIRS})
 include_directories ("/usr/local/include")
 

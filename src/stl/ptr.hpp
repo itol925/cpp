@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../common/common.hpp"
+#include "common/common.hpp"
 
 namespace stl {
     namespace ptr {
