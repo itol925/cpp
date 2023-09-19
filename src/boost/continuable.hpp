@@ -6,7 +6,7 @@
 #include <thread>
 #include <cstdlib>
 #include <ctime>
-#include "../common/common.hpp"
+#include "common/common.hpp"
 
 namespace continue_demo {
     namespace install {
