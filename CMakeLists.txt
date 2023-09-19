@@ -23,9 +23,10 @@ set(src
         src/stl/ptr.hpp
 
         src/boost/io.hpp
-
         src/boost/threadPool.hpp
         src/boost/continuable.hpp
+        src/boost/promise.hpp
+
         src/common/common.hpp
 
         src/demo/cs/common/protocol.hpp

@@ -17,10 +17,11 @@
 #include "src/leetcode/sort.hpp"
 #include "src/boost/threadPool.hpp"
 #include "src/stl/ptr.hpp"
+#include "src/boost/promise.hpp"
 
 int main(int argc, char** argv) {
     //boost_demo::test_io();
-//    continue_demo::test();
+    // continue_demo::test();
 
     //stl::init::init();
     //stl::func::test();
@@ -46,9 +47,10 @@ int main(int argc, char** argv) {
     //stl::classes::virtual_func::test();
     //leetcode::test();
     //leetcode::sort::test();
-    thread_demo::test();
+    // thread_demo::test();
     // leetcode::sort::test();
     //thread_demo::test();
 
-    stl::ptr::test();
+    // stl::ptr::test();
+    promise_demo::test();
 }

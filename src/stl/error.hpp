@@ -10,6 +10,7 @@ namespace stl {
             success = 0,
             read_head_failed = 1,
             read_body_failed = 2,
+            other = 3,
         };
 
         class ErrorCategory : public std::error_category {
@@ -26,6 +27,8 @@ namespace stl {
                         return "read head failed";
                     case ErrorCode::read_body_failed:
                         return "read body failed";
+                    case ErrorCode::other:
+                        return "custom error";
                     default:
                         return "unknown error";
                 }
