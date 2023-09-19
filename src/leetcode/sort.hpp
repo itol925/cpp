@@ -75,33 +75,58 @@ namespace leetcode {
         }
 
         /**
-         * 最大子数组
-         * 暴力解析
-         */
-         void max_sub_arr() {
-             std::vector<int> arr = {1, 3, -2, 4, 5, 6, -7, 3, 2, 11};
-             int max_sum = INT32_MIN;
-             int sum = 0;
-             for (int i = 0; i < arr.size(); ++i) {
-                 sum = arr[i];
-                 for (int j = i + 1; j < arr.size(); j++) {
-                     if (arr[j] < 0) {
-                         break;
-                     }
-                     sum += arr[j];
-                     if (sum > max_sum) {
-                         max_sum = sum;
-                     }
-                 }
-             }
-             std::cout << "max_sum:" << max_sum << std::endl;
-         }
+        * 最大子数组
+        * 暴力解析
+        */
+        void max_sub_arr() {
+            std::vector<int> arr = {1, 3, -2, 4, 5, 6, -7, 3, 2, 11};
+            int max_sum = INT32_MIN;
+            int sum = 0;
+            for (int i = 0; i < arr.size(); ++i) {
+                sum = arr[i];
+                for (int j = i + 1; j < arr.size(); j++) {
+                    if (arr[j] < 0) {
+                        break;
+                    }
+                    sum += arr[j];
+                    if (sum > max_sum) {
+                        max_sum = sum;
+                    }
+                }
+            }
+            std::cout << "max_sum:" << max_sum << std::endl;
+        }
+
+        /**
+        * 快速排序
+        */
+        void quick_sort(std::vector<int>& arr, int l, int r) {
+            if (l + 1 >= r) {
+                return;
+            }
+            int first = l, last = r - 1, key = arr[first];
+            while(first < last) {
+                while(first < last && arr[last] >= key) {
+                    --last;
+                }
+                arr[first] = arr[last]; // 找到比 key 大的元素，排在 key 的前面
+                while(first < last && arr[first] <= key) {
+                    ++first;
+                }
+                arr[last] = arr[first]; // 找到比 key 小的元素，排在 key 的后面
+            }
+            arr[first] = key;
+            quick_sort(arr, l, first);
+            quick_sort(arr, first + 1, r);
+        }
 
         void test() {
-            std::vector<int> arr = {2, 1, 3};
+            std::vector<int> arr = {2, 1, 3, 5, 7, 6};
             //insertion_sort(arr);
             //merge_sort(arr);
-            max_sub_arr();
+            //max_sub_arr();
+            quick_sort(arr, 0, 5);
+            std::cout << log(arr);
         }
     }
 }
