@@ -13,6 +13,7 @@ namespace common {
          */
         void wait() {
             std::unique_lock<std::mutex> lock(mutex_);
+            condition_ = false;
             cv_.wait(lock, [] { return condition_; });
         }
 
