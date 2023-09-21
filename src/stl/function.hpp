@@ -101,9 +101,39 @@ namespace stl {
             }
         }
 
+        namespace function_bind {
+            void test() {
+                // 1 个参数
+                std::function<void(int)> func = [](int a){
+                    std::cout << "func:" << a << std::endl;
+                };
+                // 3 个参数
+                auto func3 = [](int a, int b, int c) {
+                    std::cout << "func3 " << a << ", " << b << ", " << c << std::endl;
+                };
+
+                // 函数类型相同同的 func 绑定
+                std::function<void(int)> func_bind = std::bind(func, std::placeholders::_1);
+                // func2_1 与 func2 效果相同
+                std::function<void(int)> func_bind2 = [func](auto && PH1) {
+                    return func(std::forward<decltype(PH1)>(PH1));
+                };
+                func_bind(1);
+                func_bind2(1);
+
+                // 函数类型不同的 func 绑定
+                std::function<void(int)> func_bind3 = std::bind(func3, std::placeholders::_1, 2, 3);
+                std::function<void(int)> func_bind4 = [func3](auto && PH1) {
+                    return func3(std::forward<decltype(PH1)>(PH1), 2, 3);
+                };
+                func_bind3(1);
+                func_bind3(1);
+            }
+        }
+
         void test() {
             //function_demo::test();
-            function_template::test();
+            function_bind::test();
         }
     }
 }

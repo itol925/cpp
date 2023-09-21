@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
     //continue_demo::test();
 
     //stl::init::init();
-    //stl::func::test();
+    stl::func::test();
     //stl::test_coroutine();
 
     //stl::overload_demo::test();
