@@ -1,11 +1,11 @@
 #include <iostream>
-#include <experimental/coroutine>
+#include <coroutine>
 #include <queue>
 
 namespace stl {
-    using suspend_always = std::experimental::suspend_always;
-    using suspend_never = std::experimental::suspend_never;
-    using std::experimental::coroutine_handle;
+    using suspend_always = std::suspend_always;
+    using suspend_never = std::suspend_never;
+    using std::coroutine_handle;
 
     namespace coroutine {
         namespace readme {

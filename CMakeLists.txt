@@ -22,6 +22,7 @@ set(src
         src/stl/tools.hpp
         src/stl/ptr.hpp
         src/stl/condition.hpp
+        src/stl/noncopyable.hpp
 
         src/boost/io.hpp
         src/boost/threadPool.hpp
