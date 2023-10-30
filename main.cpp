@@ -19,13 +19,14 @@
 #include "stl/ptr.hpp"
 #include "boost/promise.hpp"
 #include "stl/condition.hpp"
+#include "stl/promise.hpp"
 
 int main(int argc, char** argv) {
     //boost_demo::test_io();
     //continue_demo::test();
 
     //stl::init::init();
-    stl::func::test();
+//    stl::func::test();
     //stl::test_coroutine();
 
     //stl::overload_demo::test();
@@ -58,4 +59,6 @@ int main(int argc, char** argv) {
     // stl::ptr::test();
     // promise_demo::test();
     //condition_demo::test();
+
+    stl::promise_demo::test();
 }

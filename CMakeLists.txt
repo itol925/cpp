@@ -23,6 +23,7 @@ set(src
         src/stl/ptr.hpp
         src/stl/condition.hpp
         src/stl/noncopyable.hpp
+        src/stl/promise.hpp
 
         src/boost/io.hpp
         src/boost/threadPool.hpp
