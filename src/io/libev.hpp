@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <csignal>
 
+// brew install libev
 namespace ev_demo {
     /**
      * ref: https://libev.cn/base/used.html
@@ -103,9 +104,9 @@ namespace ev_demo {
         struct ev_loop *loop = ev_default_loop(0);
 
         // init_timer_delay_call_once(loop);
-        // init_timer_repeat_call(loop);
+        init_timer_repeat_call(loop);
         // init_io_watcher(loop);
-        init_signal(loop);
+        // init_signal(loop);
 
         std::cout << "ev_loop.." << std::endl;
         // 启动循环 loop
