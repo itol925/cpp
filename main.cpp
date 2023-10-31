@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
     //continue_demo::test();
 
     //stl::init::init();
-//    stl::func::test();
+    //stl::func::test();
     //stl::test_coroutine();
 
     //stl::overload_demo::test();
@@ -41,9 +41,10 @@ int main(int argc, char** argv) {
     //demo::trans::test();
     //stl::chrono_demo::test();
 
-    //stl::ref_demo::test();
+    stl::ref_demo::test();
 
     //stl::template_demo::concept_demo::test();
+    //stl::template_demo::test();
 
     //stl::tools::test();
     //stl::classes::virtual_func::test();
@@ -60,5 +61,5 @@ int main(int argc, char** argv) {
     // promise_demo::test();
     //condition_demo::test();
 
-    stl::promise_demo::test();
+    //stl::promise_demo::test();
 }

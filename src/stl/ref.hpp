@@ -58,7 +58,7 @@ namespace stl {
             return s.at(n); // string::at() 返回 char 的引用
         }
 
-        void test_lefg_expression() {
+        void test_left_expression() {
             std::string s = "abc";
             char_number(s, 0) = 'b';
             std::cout << "s=" << s << std::endl; // s="bbc" 了
@@ -97,15 +97,40 @@ namespace stl {
             do_forward(n3);
         }
 
-        void test() {
-            test_left_ref();
-            test_right_ref();
-            test_reference_wrapper();
-            test_lefg_expression();
-            test_forward();
+        namespace {
+            class Base {
+            public:
+                virtual void virtualFunc() {
+                    std::cout << "base virtual func" << std::endl;
+                }
+
+                void func() {
+                    std::cout << "base func" << std::endl;
+                }
+            };
+            class Derived : public Base {
+            public:
+                void virtualFunc() override {
+                    std::cout << "derived virtual" << std::endl;
+                }
+
+                void func() {
+                    std::cout << "derived func" << std::endl;
+                }
+            };
         }
 
+        void test() {
+            //test_left_ref();
+            //test_right_ref();
+            //test_reference_wrapper();
+            //test_left_expression();
+            //test_forward();
 
+            Derived derived;
+            Base &base = derived;
+            base.virtualFunc(); // 注：这里调用的是 derived.virtualFunc
+            base.func();        // 注：这里调用的是 base.func()
+        }
     }
-
 }

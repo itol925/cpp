@@ -132,5 +132,38 @@ namespace stl {
                 }
             };
         }
+
+        template<typename T>
+        void addOne(T& t) {
+            t++;
+        }
+
+        template<typename T, int dim>
+        class MyArr {
+        public:
+            MyArr() {
+                for (int i = 0; i < dim; i++) {
+                    arr[i] = i * 2;
+                }
+            }
+            void print() {
+                std::cout << "arr:";
+                for (int i = 0; i < dim; i++) {
+                    std::cout << arr[i] << " ";
+                }
+                std::cout << std::endl;
+            }
+        private:
+            T arr[dim];
+        };
+
+        void test() {
+            int i = 0;
+            addOne(i);
+            std::cout << "i=" << i << std::endl;
+
+            MyArr<int, 3> arr;
+            arr.print();
+        }
     }
 }
