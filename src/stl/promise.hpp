@@ -6,7 +6,7 @@
 namespace stl {
     namespace promise_demo {
         void doSth(std::promise<int>&& pro) {
-            common::WaitUtil::sleep(1000);
+            common::sleep(1000);
             // pro.set_value(10086);
 
             try {

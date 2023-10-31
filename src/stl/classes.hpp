@@ -388,18 +388,19 @@ namespace stl {
                 }
             };
 
-            struct A : virtual V {
-            }; // operator= 调用 V::operator=
-            struct B : virtual V {
-            }; // operator= 调用 V::operator=
-            struct C : B, A {
-            };      // operator= 调用 B::operator=，然后调用 A::operator=
-            // 但可能只调用一次 V::operator=
-
-            void test() {
-                C c1, c2;
-                c2 = std::move(c1);
-            }
+            // 菱形继承，需要用 virtual 继承，这样 C 对象里就只会有一份 V 类的成员
+//            struct A : virtual V {
+//            }; // operator= 调用 V::operator=
+//            struct B : virtual V {
+//            }; // operator= 调用 V::operator=
+//            struct C : B, A {
+//            };      // operator= 调用 B::operator=，然后调用 A::operator=
+//            // 但可能只调用一次 V::operator=
+//
+//            void test() {
+//                C c1, c2;
+//                c2 = std::move(c1);
+//            }
 
             // 注：若一同提供了复制与移动赋值运算符，则当实参为右值（如无名临时量的纯右值，或如 std::move 的结果的亡值）时，重载决议选择移动赋值，
             // 当实参为左值（具名对象或返回左值引用的函数/运算符）时，选择复制赋值。
