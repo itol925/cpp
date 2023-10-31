@@ -8,19 +8,17 @@ namespace condition_demo {
         std::condition_variable cv_;
         bool condition_ = false;
 
-        /**
-         * block current thread
-         */
+        // wait until condition = true
         void wait() {
             std::unique_lock<std::mutex> lock(mutex_);
             condition_ = false;
+            // 注：cv_.wait 会自动解锁 mutex_，然后再 block
             cv_.wait(lock, [] { return condition_; });
         }
 
-        /**
-         * continue this thread
-         */
+        // notify wait continue
         void notify() {
+            //
             std::lock_guard<std::mutex> lock(mutex_);
             condition_ = true;
             cv_.notify_one();
