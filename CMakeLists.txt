@@ -43,13 +43,24 @@ set(src
 
         src/leetcode/test1.hpp
         src/leetcode/sort.hpp
+
+        src/io/libev.hpp
     )
 
+# ev 库
+find_library(LIBEV_LIBRARY NAMES ev)
+if(NOT LIBEV_LIBRARY)
+    message(FATAL_ERROR "LIBEV_LIBRARY not found")
+endif()
+
+# boost 库
 set(BOOST_ROOT "/opt/homebrew")
 find_package(Boost REQUIRED)
+
 include_directories(src)
 include_directories(${Boost_INCLUDE_DIRS})
 include_directories ("/usr/local/include")
 
 ADD_EXECUTABLE(test main.cpp ${src})
 set_target_properties(test PROPERTIES LINKER_LANGUAGE CXX)
+target_link_libraries(test ${LIBEV_LIBRARY})

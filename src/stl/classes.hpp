@@ -194,7 +194,7 @@ namespace stl {
                 C(const C &); // 不可复制，C++98 风格
             };
 
-            int test() {
+            void test() {
                 A a1(7);
                 A a2(a1); // 调用复制构造函数
                 B b;
@@ -267,7 +267,7 @@ namespace stl {
                 D(D &&) = default; // 强制生成移动构造函数
             };
 
-            int test() {
+            void test() {
                 std::cout << "Trying to move A\n";
                 A a1 = f(A()); // 按值返回时，从函数形参移动构造其目标
                 std::cout << "Before move, a1.s = " << std::quoted(a1.s) << " a1.k = " << a1.k << '\n';
@@ -348,7 +348,7 @@ namespace stl {
                 // 注意：复制并交换始终导致重分配
             };
 
-            int test() {
+            void test() {
                 A a1, a2;
                 std::cout << "a1 = a2 calls ";
                 a1 = a2; // 用户定义的复制赋值
@@ -448,7 +448,7 @@ namespace stl {
                 D2 &operator=(D2 &&) = default; // 无论如何都强制移动赋值
             };
 
-            int test2() {
+            void test2() {
                 A2 a1, a2;
                 std::cout << "Trying to move-assign A from rvalue temporary\n";
                 a1 = f(A2()); // 从右值临时量移动赋值
