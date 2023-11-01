@@ -48,6 +48,7 @@ int main(int argc, char** argv) {
 
     //stl::tools::test();
     //stl::classes::virtual_func::test();
+    stl::classes::default_constructor::test();
     //leetcode::test();
     //leetcode::sort::test();
     //thread_demo::test();
@@ -59,7 +60,7 @@ int main(int argc, char** argv) {
     //stl::ptr::test();
     // stl::ptr::test();
     // promise_demo::test();
-    condition_demo::test();
+    //condition_demo::test();
 
     //stl::promise_demo::test();
 
