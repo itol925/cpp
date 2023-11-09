@@ -20,6 +20,7 @@
 #include "stl/condition.hpp"
 #include "stl/promise.hpp"
 //#include "io/libev.hpp"
+#include "stl/member.hpp"
 
 int main(int argc, char** argv) {
     //boost_demo::test_io();
@@ -48,7 +49,7 @@ int main(int argc, char** argv) {
 
     //stl::tools::test();
     //stl::classes::virtual_func::test();
-    stl::classes::default_constructor::test();
+    //stl::classes::default_constructor::test();
     //leetcode::test();
     //leetcode::sort::test();
     //thread_demo::test();
@@ -65,4 +66,5 @@ int main(int argc, char** argv) {
     //stl::promise_demo::test();
 
     //ev_demo::test();
+    stl::members::test();
 }
