@@ -557,6 +557,13 @@ namespace stl {
                 }
             };
 
+            class StaticClass {
+            public:
+                static int static_func() {
+                    return 1;
+                }
+            };
+
             void test() {
                 base b;
                 b.virtual_func(); // call base
@@ -568,6 +575,9 @@ namespace stl {
 
                 base *pb = new derived;
                 pb->virtual_func(); // call derived
+
+                StaticClass sc;
+                sc.static_func(); // 注：obj 也可以调用 static func，但是调用会转成无对象调用
             }
         }
     }
