@@ -81,3 +81,35 @@
   };
   ```
   注：member initialization list 成员顺序需要和 成员在类中声明的顺序一致
+* 对于类 X 和类 Y，Y 的析构函数最后会被编译器扩充加上 M 和 X 的析构函数的调用，如下（注意顺序，如果多个成员变量，那析构顺序和声明顺序相反）：
+  ```
+  class X {
+  public:
+    X() {
+      str = new char[1024];
+    }
+    ~X() {
+      delete str;
+    }
+  private:
+      char* str;
+  };
+  class M {
+  public:
+    ~M(){}
+  };
+  class Y : public X {
+  public:
+    Y() {
+      str1 = new char[1024];
+    }
+    ~Y() {
+      delete str1;
+      // X::~X(); 注：这里编译器会在 Y 的析构函数后 加上父类 X 析构函数的调用
+    }
+  private:
+      char* str1;
+      M m;
+  };
+  ```
+  
