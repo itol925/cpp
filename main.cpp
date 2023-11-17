@@ -50,6 +50,7 @@ int main(int argc, char** argv) {
     //stl::tools::test();
     //stl::classes::virtual_func::test();
     //stl::classes::default_constructor::test();
+    stl::classes::virtual_destructor::test();
     //leetcode::test();
     //leetcode::sort::test();
     //thread_demo::test();
@@ -66,5 +67,5 @@ int main(int argc, char** argv) {
     //stl::promise_demo::test();
 
     //ev_demo::test();
-    stl::members::test();
+    //stl::members::test();
 }

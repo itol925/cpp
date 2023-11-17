@@ -11,3 +11,8 @@
   - vt 包括一系列指向虚函数的指针 和 type_info 信息
   - vt 对程序员不可见，由编译器在 construct/destructor/copy construct 中赋值
 * 指向不同类型的指针差异不在地址，而在于如何解释这个地址中内存的内容
+* 如果类被设计成基类，那其析构函数应该被设计成 virtual，否则 删除一个指向派生类对象的基类指针时，将不会调用派生类的析构函数。如：
+  ```
+  base* b = new derived;
+  delete b; // 注：如果 base::~base() 不是 virtual 的话，那 这里不会调用 derived::~derived();
+  ```

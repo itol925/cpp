@@ -580,5 +580,52 @@ namespace stl {
                 sc.static_func(); // 注：obj 也可以调用 static func，但是调用会转成无对象调用
             }
         }
+
+        namespace virtual_destructor {
+            class base {
+            public:
+                virtual ~base() {
+                    std::cout << "base destructor\n";
+                }
+            };
+
+            class derived : public base {
+            public:
+                virtual ~derived() {
+                    std::cout << "derived destructor\n";
+                }
+            };
+
+            class base2 {
+            public:
+                ~base2() { // 这里析构函数非 virtual
+                    std::cout << "base2 destructor\n";
+                }
+            };
+            class derived2 : public base2 {
+            public:
+                ~derived2() {
+                    std::cout << "derived2 destructor\n";
+                }
+            };
+
+            void test() {
+                std::cout << "derived*:" << std::endl;
+                derived* dp = new derived;
+                delete dp; // good! 先调用 derived destructor 再调用 base destructor
+
+                std::cout << "\nbase*" << std::endl;
+                base* bp = new derived;
+                delete bp; // good! 先调用 derived destructor 再调用 base destructor
+
+                std::cout << "\nderived2*" << std::endl;
+                derived2* dp2 = new derived2;
+                delete dp2; // good! 先调用 derived destructor 再调用 base destructor
+
+                std::cout << "\nbase2*" << std::endl;
+                base2* bp2 = new derived2;
+                delete bp2;  // bad!!！这里只调用了 base2 destructor，不会调用 derived2 destructor，可能导致内存泄漏
+            }
+        }
     }
 }
