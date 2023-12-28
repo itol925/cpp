@@ -21,6 +21,7 @@
 #include "stl/promise.hpp"
 //#include "io/libev.hpp"
 #include "stl/member.hpp"
+#include "demo/net/localip.hpp"
 
 int main(int argc, char** argv) {
     //boost_demo::test_io();
@@ -50,7 +51,7 @@ int main(int argc, char** argv) {
     //stl::tools::test();
     //stl::classes::virtual_func::test();
     //stl::classes::default_constructor::test();
-    stl::classes::virtual_destructor::test();
+    //stl::classes::virtual_destructor::test();
     //leetcode::test();
     //leetcode::sort::test();
     //thread_demo::test();
@@ -68,4 +69,5 @@ int main(int argc, char** argv) {
 
     //ev_demo::test();
     //stl::members::test();
+    demo::ip::get_local_ip();
 }

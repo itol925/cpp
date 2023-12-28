@@ -41,6 +41,7 @@ set(src
         src/demo/cs/server/connection.hpp
         src/demo/cs/test.hpp
         src/demo/transaction/transaction.hpp
+        src/demo/net/localip.hpp
 
         src/leetcode/test1.hpp
         src/leetcode/sort.hpp
