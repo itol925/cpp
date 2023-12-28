@@ -47,6 +47,7 @@ set(src
         src/leetcode/sort.hpp
 
         src/io/libev.hpp
+        src/io/command_line.hpp
     )
 
 # ev 库
@@ -58,11 +59,14 @@ endif()
 # boost 库
 set(BOOST_ROOT "/opt/homebrew")
 find_package(Boost REQUIRED)
+find_package(absl REQUIRED)
 
 include_directories(src)
 include_directories(${Boost_INCLUDE_DIRS})
 include_directories ("/usr/local/include")
 
+
 ADD_EXECUTABLE(test main.cpp ${src})
 set_target_properties(test PROPERTIES LINKER_LANGUAGE CXX)
 target_link_libraries(test ${LIBEV_LIBRARY})
+target_link_libraries(test absl::flags_parse)

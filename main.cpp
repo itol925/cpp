@@ -22,6 +22,7 @@
 //#include "io/libev.hpp"
 #include "stl/member.hpp"
 #include "demo/net/localip.hpp"
+#include "io/command_line.hpp"
 
 int main(int argc, char** argv) {
     //boost_demo::test_io();
@@ -69,5 +70,6 @@ int main(int argc, char** argv) {
 
     //ev_demo::test();
     //stl::members::test();
-    demo::ip::get_local_ip();
+//    demo::ip::get_local_ip();
+    absl_demo::test(argc, argv);
 }
