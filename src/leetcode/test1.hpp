@@ -2,37 +2,9 @@
 #include <vector>
 
 namespace leetcode {
-    /*
-     * 有一群孩子和一堆饼干，每个孩子有一个饥饿度，每个饼干都有一个大小。
-     * 每个孩子只能吃 一个饼干，且只有饼干的大小不小于孩子的饥饿度时，这个孩子才能吃饱。
-     * 求解最多有多少孩子 可以吃饱。
-     * */
-    void test_assign() {
-        std::vector<int> children = {1, 2, 5, 1, 6};
-        std::vector<int> cookies = {1, 2, 4, 3, 5, 2};
-        std::sort(children.begin(), children.end());
-        std::sort(cookies.begin(), cookies.end());
 
-        int child = 0;
-        int cookie = 0;
-        while (child < children.size() && cookie < cookies.size()) {
-            if (children[child] <= cookies[cookie]) {
-                ++child;
-            }
-            ++cookie;
-        }
-        std::cout << "count:" << child << std::endl;
-    }
 
-    /**
-     * 一群孩子站成一排，每一个孩子有自己的评分。
-     * 现在需要给这些孩子发糖果，规则是如果一个孩子的评分比自己身旁的一个孩子要高，
-     * 那么这个孩子就必须得到比身旁孩子更多的糖果;所有孩子至少要有一个糖果。
-     * 求解最少需要多少个糖果。
-     */
-    void test_candy() {
 
-    }
 
     // 二分查找，针对有序数组
     int binary_search() {

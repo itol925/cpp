@@ -21,6 +21,8 @@
 #include "stl/promise.hpp"
 //#include "io/libev.hpp"
 #include "stl/member.hpp"
+#include "leetcode/greedy.hpp"
+#include "leetcode/doublepointers.hpp"
 
 int main(int argc, char** argv) {
     //boost_demo::test_io();
@@ -66,5 +68,8 @@ int main(int argc, char** argv) {
     //stl::promise_demo::test();
 
     //ev_demo::test();
-    stl::members::test();
+    //stl::members::test();
+
+    //leetcode::greedy::test();
+    leetcode::doublepointers::test();
 }
