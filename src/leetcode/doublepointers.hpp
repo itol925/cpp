@@ -31,8 +31,44 @@ namespace leetcode {
             }
         }
 
+        /**
+         * 给定两个有序数组，将其合二为一，要求不开辟新的内存
+         *
+         * step1：从后往前依次从 arr1 和 arr2 中找最大的数，填入 arr1
+         * 注：原理即 用两个指针，分别指向 arr1 和 arr2 的末尾，分别填入arr1
+         */
+        void mergeSortedArray() {
+            std::vector<int> arr1 = {1, 2, 3, 0, 0, 0};
+            std::vector<int> arr2 = {2, 5, 6}; // 将 arr2 合到 arr1 中
+            int n1 = 2, n2 = 2;
+            for (int i = 5; i >= 0; i--) { // 从后往前向 arr1 补数
+                if (n1 < 0) {
+                    arr1[i] = arr2[n2];
+                    n2--;
+                    continue;
+                }
+                if (n2 < 0) {
+                    arr1[i] = arr1[n1];
+                    n1--;
+                    continue;
+                }
+                if (arr1[n1] > arr2[n2]) {
+                    arr1[i] = arr1[n1];
+                    n1--;
+                } else {
+                    arr1[i] = arr2[n2];
+                    n2--;
+                }
+            }
+
+            // result
+            for (int i = 0; i < 6; i++) {
+                std::cout << arr1[i] << ",";
+            }
+        }
+
         void test() {
-            twoSum();
+            mergeSortedArray();
         }
     }
 }
