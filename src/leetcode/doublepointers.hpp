@@ -8,7 +8,8 @@ namespace leetcode {
      * 若两个指针指向同一数组，遍历同一方向且不相交，则称为 滑动窗口，遍历相反方向，则一般用来搜索（目标数组往往是排好序的）
      */
     namespace doublepointers {
-        /**
+        /** 两数相加
+         * Easy
          * 给定一个增序的数组，找到2个数，使其和为定值。已知只有一对解
          *
          * step1: 两个指针一个指向头，一个指向尾，分别向中间移动
@@ -31,7 +32,8 @@ namespace leetcode {
             }
         }
 
-        /**
+        /** Easy
+         * 归并有序数组
          * 给定两个有序数组，将其合二为一，要求不开辟新的内存
          *
          * step1：从后往前依次从 arr1 和 arr2 中找最大的数，填入 arr1
@@ -66,6 +68,12 @@ namespace leetcode {
                 std::cout << arr1[i] << ",";
             }
         }
+
+        /**
+         * 快慢指针 Medium
+         * 给定一个链表，如果有环路，找出环路的开始点
+         *
+         */
 
         void test() {
             mergeSortedArray();
