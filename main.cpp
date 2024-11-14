@@ -1,30 +1,40 @@
-#include "boost/io.hpp"
-#include "boost/continuable.hpp"
-#include "stl/initialization.hpp"
-#include "stl/function.hpp"
-#include "stl/coroutine.hpp"
-#include "stl/overload.hpp"
-#include "demo/cs/test.hpp"
-#include "stl/smartptr.hpp"
-#include "stl/chrono.hpp"
-#include "demo/transaction/transaction.hpp"
-#include "stl/ref.hpp"
-#include "stl/template.hpp"
-#include "stl/tools.hpp"
-#include "stl/classes.hpp"
-#include "leetcode/test1.hpp"
-#include "leetcode/sort.hpp"
-#include "boost/threadPool.hpp"
-#include "stl/ptr.hpp"
-#include "boost/promise.hpp"
-#include "stl/condition.hpp"
-#include "stl/promise.hpp"
+//#include "boost/io.hpp"
+//#include "boost/continuable.hpp"
+//#include "stl/initialization.hpp"
+//#include "stl/function.hpp"
+//#include "stl/coroutine.hpp"
+//#include "stl/overload.hpp"
+//#include "demo/cs/test.hpp"
+//#include "stl/smartptr.hpp"
+//#include "stl/chrono.hpp"
+//#include "demo/transaction/transaction.hpp"
+//#include "stl/ref.hpp"
+//#include "stl/template.hpp"
+//#include "stl/tools.hpp"
+//#include "stl/classes.hpp"
+//#include "leetcode/test1.hpp"
+//#include "leetcode/sort.hpp"
+//#include "boost/threadPool.hpp"
+//#include "stl/ptr.hpp"
+//#include "boost/promise.hpp"
+//#include "stl/condition.hpp"
+//#include "stl/promise.hpp"
 //#include "io/libev.hpp"
-#include "stl/member.hpp"
-#include "leetcode/greedy.hpp"
-#include "leetcode/doublepointers.hpp"
+//#include "stl/member.hpp"
+//#include "leetcode/greedy.hpp"
+//#include "leetcode/doublepointers.hpp"
+//#include "leetcode/research.hpp"
+
+#include <iostream>
+using namespace std;
+
+int test() {
+    long res = 234234 * 123;
+    std::cout << "234234 * 123 = " << res;
+}
 
 int main(int argc, char** argv) {
+    test();
     //boost_demo::test_io();
     //continue_demo::test();
 
@@ -71,5 +81,7 @@ int main(int argc, char** argv) {
     //stl::members::test();
 
     //leetcode::greedy::test();
-    leetcode::doublepointers::test();
+    //leetcode::doublepointers::test();
+
+    //leetcode::research::test();
 }

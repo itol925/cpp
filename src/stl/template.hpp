@@ -85,7 +85,8 @@ namespace stl {
                 //double d = add(1.0, 2.0); error! 1.0 不是整数
             }
 
-            // 推断出返回值的类型
+            // 推断出返回值的类型。
+            // 注：返回类型暂时用 auto 占位，通过 decltype(t + u) 尾置返回类型
             template<typename T, typename U>
             auto add(T t, U u) -> decltype(t + u) {
                 return t + u;

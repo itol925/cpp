@@ -46,6 +46,7 @@ set(src
         src/leetcode/sort.hpp
         src/leetcode/greedy.hpp
         src/leetcode/doublepointers.hpp
+        src/leetcode/research.hpp
 
         src/io/libev.hpp
     )

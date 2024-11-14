@@ -20,6 +20,7 @@ namespace leetcode {
         /**
          * 插入排序
          * https://www.runoob.com/w3cnote/insertion-sort.html
+         *
          */
         void insertion_sort(std::vector<int> v) {
             std::cout << "vec:" << log(v) << std::endl;
@@ -106,27 +107,62 @@ namespace leetcode {
             }
             int first = l, last = r - 1, key = arr[first];
             while(first < last) {
-                while(first < last && arr[last] >= key) {
+                while(first < last && arr[last] >= key) { // 从后往前找到比 key 大的元素，替换 first
                     --last;
                 }
-                arr[first] = arr[last]; // 找到比 key 大的元素，排在 key 的前面
-                while(first < last && arr[first] <= key) {
+                arr[first] = arr[last];
+                while(first < last && arr[first] <= key) { // 从前往后找到比 key 小的元素，替换 last
                     ++first;
                 }
-                arr[last] = arr[first]; // 找到比 key 小的元素，排在 key 的后面
+                arr[last] = arr[first];
             }
             arr[first] = key;
             quick_sort(arr, l, first);
             quick_sort(arr, first + 1, r);
         }
 
+        /** 桶排序
+         * 指定一个数组，求前K个最频繁的数字 Medium
+         * 如 nums = [1,1,1,1,2,2,3,4]，k=2，则输出 [1,2]
+         * step1: 设立一个桶 counts，将各值出现的次数
+         * step2：对桶按 value 进行排序
+         */
+        void topKFrequentElement() {
+            std::vector<int> nums = {0,1, 1, 1, 1, 2, 2, 3, 4};
+            int k = 2;
+
+            std::unordered_map<int, int> counts;
+            int max_count = 0;
+            for (const int& num : nums) {
+                max_count = std::max(max_count, ++counts[num]);
+            }
+
+            std::vector<std::vector<int>> buckets;
+            for (const auto& p : counts) {
+                buckets.push_back({p.first, p.second});
+            }
+
+            for (int i = 0; i < buckets.size(); ++i) {
+                for (int j = i + 1; j < buckets.size(); ++j) {
+                    if (buckets[i][1] < buckets[j][1]) {
+                        std::swap(buckets[i], buckets[j]);
+                    }
+                }
+            }
+
+            for (int i = 0; i < k; ++i) {
+                std::cout << buckets[i][0] << ",";
+            }
+        }
+
         void test() {
-            std::vector<int> arr = {2, 1, 3, 5, 7, 6};
+            //std::vector<int> arr = {2, 1, 3, 5, 7, 6};
             //insertion_sort(arr);
             //merge_sort(arr);
             //max_sub_arr();
-            quick_sort(arr, 0, 5);
-            std::cout << log(arr);
+            //quick_sort(arr, 0, 5);
+            //std::cout << log(arr);
+            topKFrequentElement();
         }
     }
 }
