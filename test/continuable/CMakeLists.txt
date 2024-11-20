@@ -1,19 +1,11 @@
 cmake_minimum_required(VERSION 3.5)
-project(test/asio)
+project(test/continuable)
 
-#include(FetchContent)
-#
-#FetchContent_Declare(
-#        continuable
-#        GIT_REPOSITORY https://github.com/Naios/continuable.git
-#        GIT_TAG 4.2.2
-#)
-#
-#FetchContent_MakeAvailable(continuable)
+add_executable(continuable-demo continuable.cpp)
 
-add_executable(continuable continuable.cpp)
-target_include_directories(continuable PRIVATE ../../third-party/continuable/include)
-#
-# link gtest
-target_link_libraries(continuable gtest_main)
-gtest_discover_tests(continuable)
+target_include_directories(continuable-demo PRIVATE ../../third-party/asio/include)
+target_include_directories(continuable-demo PRIVATE ../../third-party/continuable/include)
+target_include_directories(continuable-demo PRIVATE ../../third-party/function2/function2/include)
+
+target_link_libraries(continuable-demo gtest-main)
+gtest_discover_tests(continuable-demo)

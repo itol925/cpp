@@ -1,0 +1,5 @@
+if(EXISTS "/Users/panyinglong/workspace/cpp/cmake-build-debug/test/continuable/continuable-demo[1]_tests.cmake")
+  include("/Users/panyinglong/workspace/cpp/cmake-build-debug/test/continuable/continuable-demo[1]_tests.cmake")
+else()
+  add_test(continuable-demo_NOT_BUILT continuable-demo_NOT_BUILT)
+endif()

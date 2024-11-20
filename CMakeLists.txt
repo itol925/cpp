@@ -4,6 +4,7 @@ project(src/stl LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcoroutines-ts")
+add_compile_options(-Wno-deprecated-declarations)
 
 include_directories(src)
 include_directories(third-party/googletest)
@@ -15,4 +16,5 @@ include(GoogleTest)
 
 add_subdirectory(test/hello)
 add_subdirectory(test/asio)
-#add_subdirectory(test/continuable)
+add_subdirectory(test/continuable)
+add_subdirectory(test/demo)

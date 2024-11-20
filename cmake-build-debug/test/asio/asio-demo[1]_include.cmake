@@ -1,0 +1,5 @@
+if(EXISTS "/Users/panyinglong/workspace/cpp/cmake-build-debug/test/asio/asio-demo[1]_tests.cmake")
+  include("/Users/panyinglong/workspace/cpp/cmake-build-debug/test/asio/asio-demo[1]_tests.cmake")
+else()
+  add_test(asio-demo_NOT_BUILT asio-demo_NOT_BUILT)
+endif()

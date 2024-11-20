@@ -2,14 +2,13 @@
 #define DEMO_CS_CONNECTION_H_H
 
 #include <iostream>
-#include <continuable/continuable.hpp>
-#include <continuable/external/asio.hpp>
+#include "continuable/continuable.hpp"
+#include "asio.hpp"
 #include "listener.hpp"
 #include "handler.hpp"
-#include "../common/protocol.hpp"
+#include "common/protocol.hpp"
 
-namespace demo {
-    namespace cs {
+namespace demo::cs {
         using namespace boost;
 
         class Connection {
@@ -33,7 +32,7 @@ namespace demo {
 
         private:
             cti::continuable<std::string> async_read_request() {
-                boost::system::error_code ec;
+                std::error_code ec;
                 socket.read_some(asio::buffer(buf, protocol::HEAD_SIZE), ec);
                 if (ec) {
                     auto ptr = std::make_exception_ptr(std::logic_error("read head failed!"));
@@ -63,7 +62,7 @@ namespace demo {
                 std::cout << "server:write response head:" << body_size << std::endl;
                 buffers.emplace_back(asio::buffer(response_body));
                 std::cout << "server:write response body:'" << response_body << "'" << std::endl;
-                boost::system::error_code ec;
+                std::error_code ec;
                 std::size_t write_len = socket.write_some(buffers, ec);
                 if (ec) {
                     auto ptr = std::make_exception_ptr(std::logic_error("write response failed!"));
@@ -78,5 +77,4 @@ namespace demo {
             std::array<char, 32> buf{0};
         };
     }
-}
 #endif

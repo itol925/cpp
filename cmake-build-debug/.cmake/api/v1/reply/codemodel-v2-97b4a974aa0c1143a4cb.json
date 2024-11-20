@@ -1,0 +1,241 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4,
+						5
+					],
+					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"projectIndex" : 0,
+					"source" : "."
+				},
+				{
+					"build" : "third-party/googletest",
+					"jsonFile" : "directory-third-party.googletest-Debug-2defe3f9cc4acbd6c811.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 0,
+					"source" : "third-party/googletest",
+					"targetIndexes" : 
+					[
+						3,
+						4,
+						5
+					]
+				},
+				{
+					"build" : "test/hello",
+					"jsonFile" : "directory-test.hello-Debug-64b01f4e4d5684bfe35a.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 1,
+					"source" : "test/hello",
+					"targetIndexes" : 
+					[
+						6
+					]
+				},
+				{
+					"build" : "test/asio",
+					"jsonFile" : "directory-test.asio-Debug-9ce8243984556236c888.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 2,
+					"source" : "test/asio",
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"build" : "test/continuable",
+					"jsonFile" : "directory-test.continuable-Debug-16aa0dfb21fe5a7bfb9c.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 3,
+					"source" : "test/continuable",
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"build" : "test/demo",
+					"jsonFile" : "directory-test.demo-Debug-b6c06c3a464c04fc0a74.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"parentIndex" : 0,
+					"projectIndex" : 4,
+					"source" : "test/demo",
+					"targetIndexes" : 
+					[
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"childIndexes" : 
+					[
+						1,
+						2,
+						3,
+						4
+					],
+					"directoryIndexes" : 
+					[
+						0,
+						1
+					],
+					"name" : "src/stl",
+					"targetIndexes" : 
+					[
+						3,
+						4,
+						5
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						2
+					],
+					"name" : "test/hello",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						6
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						3
+					],
+					"name" : "test/asio-demo",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						0
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						4
+					],
+					"name" : "test/continuable",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						1
+					]
+				},
+				{
+					"directoryIndexes" : 
+					[
+						5
+					],
+					"name" : "test/demo",
+					"parentIndex" : 0,
+					"targetIndexes" : 
+					[
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 3,
+					"id" : "asio-demo::@aee68f93260eb84d69ae",
+					"jsonFile" : "target-asio-demo-Debug-9efa2acffab74c3c9e42.json",
+					"name" : "asio-demo",
+					"projectIndex" : 2
+				},
+				{
+					"directoryIndex" : 4,
+					"id" : "continuable-demo::@ecd2630daefc077438a8",
+					"jsonFile" : "target-continuable-demo-Debug-f4f7506d4322ad433902.json",
+					"name" : "continuable-demo",
+					"projectIndex" : 3
+				},
+				{
+					"directoryIndex" : 5,
+					"id" : "cs-demo::@3ebc301251fbba97801a",
+					"jsonFile" : "target-cs-demo-Debug-8f52a264361f4e58d43f.json",
+					"name" : "cs-demo",
+					"projectIndex" : 4
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "gmock::@31c2bfe12d8a23357ef3",
+					"jsonFile" : "target-gmock-Debug-d0d7ae3d943b69246f7c.json",
+					"name" : "gmock",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "gtest::@31c2bfe12d8a23357ef3",
+					"jsonFile" : "target-gtest-Debug-efa50f2dbb9c78aeabcb.json",
+					"name" : "gtest",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 1,
+					"id" : "gtest-main::@31c2bfe12d8a23357ef3",
+					"jsonFile" : "target-gtest-main-Debug-a97911b397e1ed68839d.json",
+					"name" : "gtest-main",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 2,
+					"id" : "hello::@0631cad98a6e916850c7",
+					"jsonFile" : "target-hello-Debug-9975fc80b12321f0f286.json",
+					"name" : "hello",
+					"projectIndex" : 1
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "/Users/panyinglong/workspace/cpp/cmake-build-debug",
+		"source" : "/Users/panyinglong/workspace/cpp"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 4
+	}
+}

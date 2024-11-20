@@ -3,14 +3,13 @@
 
 #include <iostream>
 #include <map>
-#include <continuable/continuable.hpp>
-#include <continuable/external/asio.hpp>
+#include "continuable/continuable.hpp"
+#include "asio.hpp"
 #include "connection.hpp"
-
+using namespace cti;
+using namespace std;
 namespace demo {
     namespace cs {
-        using namespace boost;
-
         class Listener {
         public:
             Listener(asio::io_context &ctx, std::string &ip, int port)
@@ -18,16 +17,17 @@ namespace demo {
                       acceptor(ctx, endpoint) {}
 
             void async_start() {
+                std::cout << "server async start" << std::endl;
                 auto connection = std::make_unique<Connection>(ctx);
                 auto key = connection.get();
-                acceptor.async_accept(connection->get_socket(), cti::use_continuable)
-                        .then([this, key]() {
-                            handle_accept_connect(key);
-                        }).fail([this, key]() {
-                            handle_accept_error(key);
-                        }).then([this] {
-                            async_start();
-                        });
+                acceptor.async_accept(connection->get_socket(), [this, key](const asio::error_code &error) {
+                    if (!error) {
+                        handle_accept_connect(key);
+                        async_start();
+                    } else {
+                        handle_accept_error(key);
+                    }
+                });
                 // todo add lock
                 conMap.insert(std::make_pair(key, std::move(connection)));
             }
