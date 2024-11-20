@@ -1,21 +1,19 @@
 cmake_minimum_required(VERSION 3.5)
-project(test/asio)
+project(test/asio-demo)
 
-include(FetchContent)
+set(ASIO_SRC ../../third-party/asio/include)
 
-# 引入独立的 Asio 库
-FetchContent_Declare(
-        asio
-        GIT_REPOSITORY https://github.com/chriskohlhoff/asio.git
-        GIT_TAG asio-1-24-0  # 指定所需版本（可选）
-)
-# 下载并添加 Asio 库
-FetchContent_MakeAvailable(asio)
+# 以 INTERFACE ASIO_STANDALONE 方式编译 asio
+# INTERFACE 指定目标类型为接口库，无实际产物（如静态文件）
+# ASIO_STANDALONE 表示 asio 不依赖 boost，独立编译
+# 注：asio 库是头文件库，因此只需要 include 头文件即可
+add_library(asio INTERFACE)
+target_compile_options(asio INTERFACE ASIO_STANDALONE)
+target_include_directories(asio INTERFACE ${ASIO_SRC})
+#target_link_libraries(asio INTERFACE <threads>) # asio 依赖 threads 库
 
-add_executable(asio asio.cpp)
-# 创建可执行文件并包含 Asio 头文件路径
-target_include_directories(asio PRIVATE ${asio_SOURCE_DIR}/asio/include)
-
+add_executable(asio-demo asio.cpp)
+target_include_directories(asio-demo PRIVATE ${ASIO_SRC})
 # link gtest
-target_link_libraries(asio gtest_main)
-gtest_discover_tests(asio)
+target_link_libraries(asio-demo gtest-main)
+gtest_discover_tests(asio-demo)

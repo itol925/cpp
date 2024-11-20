@@ -1,0 +1,3 @@
+[submodule "third-party/continuable"]
+	path = third-party/continuable
+	url = https://github.com/Naios/continuable.git

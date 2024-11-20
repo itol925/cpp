@@ -3,7 +3,7 @@
 //
 #include <gtest/gtest.h>
 #include "boost/io.hpp"
-#include "boost/continuable.hpp"
+#include "continuable_demo/continuable.hpp"
 #include "boost/threadPool.hpp"
 #include "boost/promise.hpp"
 

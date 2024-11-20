@@ -6,6 +6,8 @@
 #include "asio_demo/io_socket.hpp"
 #include "asio_demo/timer.hpp"
 #include "asio_demo/signal.hpp"
+#include "asio_demo/thread_pool.hpp"
+#include "common/common.hpp"
 
 TEST(AsioTest, TestPost) {
     asio_demo::io_context::test_post();
@@ -49,4 +51,34 @@ TEST(AsioTest, TestAsyncWait) {
 
 TEST(AsioTest, TestSignal) {
     asio_demo::signal::test();
+}
+
+TEST(AsioTest, ThreadPool) {
+    asio_demo::thread_pool::ThreadPoolSingleContext thread_pool(5);
+    std::cout << "start test.." << std::endl;
+    thread_pool.post([](){
+        std::this_thread::sleep_for(std::chrono::milliseconds(common::random(1000, 5000)));
+        std::cout << "test thread with single context" << std::endl;
+    });
+
+    for (int i = 0; i < 5; ++i) {
+        thread_pool.post([i](){
+            std::this_thread::sleep_for(std::chrono::milliseconds(common::random(1000, 5000)));
+            std::cout << "test thread with single context " << i << std::endl;
+        });
+    }
+}
+
+TEST(AsioTest, ThreadPool2) {
+    asio_demo::thread_pool::ThreadPoolMultiContext thread_pool(5);
+    std::cout << "start test.." << std::endl;
+
+    for (int i = 0; i < 5; ++i) {
+        thread_pool.post([i](){
+            std::this_thread::sleep_for(std::chrono::milliseconds(common::random(1000, 5000)));
+            std::cout << "test thread with single context " << i << std::endl;
+        });
+    }
+
+    thread_pool.stop();
 }
