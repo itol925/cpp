@@ -99,17 +99,4 @@ namespace ev_demo {
             ev_signal_start(loop, &signal_watcher);
         }
     }
-
-    void test() {
-        struct ev_loop *loop = ev_default_loop(0);
-
-        // init_timer_delay_call_once(loop);
-        init_timer_repeat_call(loop);
-        // init_io_watcher(loop);
-        // init_signal(loop);
-
-        std::cout << "ev_loop.." << std::endl;
-        // 启动循环 loop
-        ev_run(loop, 0);
-    }
 }

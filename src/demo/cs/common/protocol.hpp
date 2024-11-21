@@ -3,12 +3,10 @@
 
 #include <iostream>
 
-namespace demo {
-    namespace cs {
-        struct protocol {
-            static const std::size_t HEAD_SIZE = sizeof(std::size_t);
-        };
-    }
+namespace demo::cs {
+    struct protocol {
+        static const std::size_t HEAD_SIZE = sizeof(std::size_t);
+    };
 }
 
 #endif

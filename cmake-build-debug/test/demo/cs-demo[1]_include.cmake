@@ -1,5 +1,0 @@
-if(EXISTS "/Users/panyinglong/workspace/cpp/cmake-build-debug/test/demo/cs-demo[1]_tests.cmake")
-  include("/Users/panyinglong/workspace/cpp/cmake-build-debug/test/demo/cs-demo[1]_tests.cmake")
-else()
-  add_test(cs-demo_NOT_BUILT cs-demo_NOT_BUILT)
-endif()
