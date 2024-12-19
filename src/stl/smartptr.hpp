@@ -80,7 +80,7 @@ namespace stl::smartPtr {
     }
 
     namespace share_ptr_demo {
-        // share_ptr 不完全线程完全，但是控制字段是线程安全的，比如 引用计数
+        // share_ptr 不完全线程安全，但是控制字段是线程安全的，比如 引用计数
         void test() {
             auto int_p = std::make_shared<int>(0);
             std::thread t1([&int_p] {
@@ -96,10 +96,6 @@ namespace stl::smartPtr {
             t1.join();
             t2.join();
             std::cout << "int_p:" << *int_p << std::endl;
-        }
-
-        void test2() {
-            //std::atomic<std::shared_ptr<long>> instance;
         }
     }
 
@@ -119,7 +115,7 @@ namespace stl::smartPtr {
             auto weak_i = std::weak_ptr<int>(share_i);
             show_val(weak_i);
 
-            share_i.reset();
+            share_i.reset(); // 将 shared_ptr 置为空，不再管理任何对象
             std::cout << "reset share_i" << std::endl;
 
             show_val(weak_i);

@@ -17,7 +17,7 @@ namespace stl {
             std::string s;  // 零初始化为不确定值再默认初始化为 ""
         }
 
-        void init() {
+        void init_test() {
             using namespace std;
 
             std::cout << "-- test init --" << std::endl;
@@ -25,7 +25,7 @@ namespace stl {
             //std::string s1{};   // 值初始化
             std::string s2("hello s2");    // 直接初始化
             std::string s3 = "hello s3";    // 复制初始化
-            //std::string s4 {'h', 'e', 'l', 'l', 'e', ' ', 's', '4'};  // 列表初始化
+            std::string s4 {'h', 'e', 'l', 'l', 'e', ' ', 's', '4'};  // 列表初始化
             char arr[3] = {'a', 'b'};    // 聚合初始化
             char &c = arr[0];   // 引用初始化
 
