@@ -3,8 +3,9 @@
 #include "greedy.hpp"
 #include "research.hpp"
 #include "sort.hpp"
+#include "backtrack.hpp"
 
-TEST(HelloTest, Hello) {
-    EXPECT_STRNE("hello", "world");
-    EXPECT_EQ(7 * 6, 42);
+TEST(LeetCode, Backtrack) {
+    leetcode::backtrack::permutations::test();
+    leetcode::backtrack::combinations::test();
 }
