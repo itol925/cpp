@@ -6,6 +6,7 @@
 #include "backtrack.hpp"
 
 TEST(LeetCode, Backtrack) {
-    leetcode::backtrack::permutations::test();
-    leetcode::backtrack::combinations::test();
+    //leetcode::backtrack::permutations::test();
+    //leetcode::backtrack::combinations::test();
+    leetcode::backtrack::word_search::test();
 }
