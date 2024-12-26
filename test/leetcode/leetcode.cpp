@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
 #include "doublepointers.hpp"
 #include "greedy.hpp"
-#include "research.hpp"
+#include "binary_search.hpp"
 #include "sort.hpp"
 #include "backtrack.hpp"
 #include "dfs.hpp"
@@ -13,8 +13,36 @@ TEST(LeetCode, Greedy2) {
     leetcode::greedy::candy::test();
 }
 TEST(LeetCode, Greedy3) {
-    leetcode::greedy::eraseOverlapIntervals::test();
+    leetcode::greedy::erase_overlap_intervals::test();
 }
+
+TEST(LeetCode, DoublePoints) {
+    leetcode::double_pointers::two_sum::test();
+}
+TEST(LeetCode, DoublePoints2) {
+    leetcode::double_pointers::merge_sort_arr::test();
+}
+
+TEST(LeetCode, BinarySearch) {
+    leetcode::binary_search::binary_search::test();
+}
+
+TEST(LeetCode, InsectionSort) {
+    leetcode::sort::insert_sort::test();
+}
+TEST(LeetCode, MergeSort) {
+    leetcode::sort::merge_sort::test();
+}
+TEST(LeetCode, QuicSort) {
+    leetcode::sort::quick_sort::test();
+}
+TEST(LeetCode, MaxSubArr) {
+    leetcode::sort::max_sub_arr::test();
+}
+TEST(LeetCode, TopK) {
+    leetcode::sort::topK_frequent_element::test();
+}
+
 TEST(LeetCode, DFS) {
     leetcode::dfs::max_area_of_island::test();
     leetcode::dfs::max_area_of_island::test2();

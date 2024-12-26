@@ -9,10 +9,10 @@ using namespace std;
  * 深度优先搜索 deep-first-search
  */
 namespace leetcode::dfs {
-    /**
-     * 给定一个二维0-1矩阵，0表示海洋，1表示陆地，每个格子只能与上下左右相邻，求最大岛屿面积
-     */
     namespace max_area_of_island {
+        /**
+         * 给定一个二维0-1矩阵，0表示海洋，1表示陆地，每个格子只能与上下左右相邻，求最大岛屿面积
+         */
         int val(vector <vector<int>> &island, int r, int c) {
             if (r > island.size() - 1 || r < 0 || c > island[0].size() - 1 || c < 0) {
                 return 0;

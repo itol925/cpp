@@ -36,6 +36,7 @@ namespace leetcode::greedy {
             std::cout << "assign_cookies，可以喂饱孩子个数:" << assign_cookies(children, cookies) << std::endl;
         }
     }
+
     namespace candy {
         /** Hard
         * 一群孩子站成一排，每一个孩子有自己的评分。
@@ -68,7 +69,7 @@ namespace leetcode::greedy {
         }
     }
 
-    namespace eraseOverlapIntervals {
+    namespace erase_overlap_intervals {
         /**
          * 指定多个区间，计算让这些区间互不重叠的需要移除区间的最小个数，起止相连不算重叠
          * 比如：input 为 [[1, 2], [2, 4], [1, 3]]，输出 [[1, 2], 2, 4]]
