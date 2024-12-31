@@ -22,6 +22,12 @@ TEST(LeetCode, DoublePoints) {
 TEST(LeetCode, DoublePoints2) {
     leetcode::double_pointers::merge_sort_arr::test();
 }
+TEST(LeetCode, DoublePoints3) {
+    leetcode::double_pointers::linked_list_cycle::test();
+}
+TEST(LeetCode, DoublePoints4) {
+    leetcode::double_pointers::minimum_window_substring::test();
+}
 
 TEST(LeetCode, BinarySearch) {
     leetcode::binary_search::binary_search::test();
