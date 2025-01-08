@@ -5,6 +5,7 @@
 #include "sort.hpp"
 #include "backtrack.hpp"
 #include "dfs.hpp"
+#include "bfs.hpp"
 
 TEST(LeetCode, Greedy) {
     leetcode::greedy::assign_cookies::test();
@@ -31,6 +32,9 @@ TEST(LeetCode, DoublePoints4) {
 
 TEST(LeetCode, BinarySearch) {
     leetcode::binary_search::binary_search::test();
+}
+TEST(LeetCode, MySqrt) {
+    leetcode::binary_search::my_sqrt::test();
 }
 
 TEST(LeetCode, InsectionSort) {
@@ -68,4 +72,8 @@ TEST(LeetCode, Backtrack3) {
 }
 TEST(LeetCode, Backtrack4) {
     leetcode::dfs::backtrack::n_queens::test();
+}
+
+TEST(LeetCode, BFS) {
+    leetcode::bfs::shortest_bridge::test();
 }

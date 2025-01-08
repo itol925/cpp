@@ -167,30 +167,42 @@ namespace leetcode::double_pointers {
             return s.substr(start, min);
         }
         string do_mws1(string s, string t) {
-            int has[128] = { 0 };
-            size_t cnt = 0, start = 0, end = 0, min = s.size() + 1;
-            for (size_t i = 0; i < s.size(); ++i) {
-                ++has[t[i]];
+            int flags[128] = { 0 }; // 存储t中各字符的数量，用于match后重置nums
+            for (int i = 0; i < t.size(); ++i) {
+                ++flags[t[i]];
             }
-            for (size_t i = 0; i < s.size(); ++i) {
-                if (has[s[i]] > 0) {
+            int cnt = 0, r = 0, min = s.size() + 1;
+            int nums[128] = {0};    // 存储t中各字符的数量，用于过程统计
+            std::memcpy(nums, flags, sizeof(flags));
+            string res;
+            for (int l = 0; l < s.size(); ++l) {
+                if (nums[s[l]]-- > 0) { // 右移l指针，直到遇到t字符串的字符，再开始右移r指针
                     cnt++;
-                    has[s[i]]--;
-                }
-                if (cnt == t.size()) {  // 全部 match 了，比一下 min len
-                    while (has[s[--end]]++ != 0) {}
-                    size_t len = end - i + 1U;
-                    if (len < min) {
-                        min = len;
-                        start = i;
+                    for (r = l + 1; r < s.size(); ++r) { // 右移r指针，直到全部match t字符串
+                        if (nums[s[r]]-- > 0) {
+                            cnt++;
+                            if (cnt == t.size()) { // 完全match。重置t中各字符串的数量
+                                cout << "match:" << s.substr(l, r - l + 1) << endl;
+                                // 重置 nums
+                                std::memcpy(nums, flags, sizeof(flags));
+                                cnt = 0;
+                                if (r - l + 1 < min) {
+                                    min = r - l + 1;
+                                    res = s.substr(l, r - l + 1);
+                                }
+                                break;
+                            }
+                        }
                     }
                 }
             }
-            return s.substr(start, min);
+            return res;
         }
         void test() {
             string S = "ADOBECODEBANC", T = "ABC";
-            cout << "minimum_window_substring:" << do_mws(S, T) << endl;
+            cout << "minimum_window_substring. S=" << S << ", T=" << T << endl;
+            string str = do_mws1(S, T);
+            cout << "ans:" << str << endl;
         }
     }
 }
