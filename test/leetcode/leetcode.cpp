@@ -6,6 +6,7 @@
 #include "backtrack.hpp"
 #include "dfs.hpp"
 #include "bfs.hpp"
+#include "dynamic_programming.hpp"
 
 TEST(LeetCode, Greedy) {
     leetcode::greedy::assign_cookies::test();
@@ -79,4 +80,16 @@ TEST(LeetCode, BFS) {
 }
 TEST(LeetCode, BFS2) {
     leetcode::bfs::word_ladder_ii::test();
+}
+
+TEST(LeetCode, DynamicProgramming) {
+    leetcode::dynamic_programming::climbing_stairs::test();
+}
+
+TEST(LeetCode, DynamicProgramming2) {
+    leetcode::dynamic_programming::house_robber::test();
+}
+
+TEST(LeetCode, DynamicProgramming3) {
+    leetcode::dynamic_programming::arithmetic_slices::test();
 }

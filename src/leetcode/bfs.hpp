@@ -167,7 +167,7 @@ namespace leetcode::bfs {
                 step++;
                 int size = q.size();
                 for (int i = 0; i < size; i++) {
-                    const string currWord = move(q.front());
+                    const string currWord = std::move(q.front());
                     string nextWord = currWord;
                     q.pop();
                     // 将每一位替换成 26 个小写英文字母
