@@ -42,17 +42,18 @@ namespace common {
 
     template<typename T>
     std::string array_to_string(const std::vector<T> &arr) {
-        std::string str = "[";
+        std::ostringstream oss;
+        oss << "[";
         for (int i = 0; i < arr.size(); i++) {
             if constexpr (is_vector<T>::value) {
-                str += array_to_string(arr[i]);
+                oss << array_to_string(arr[i]);
             } else {
-                str += std::to_string(arr[i]);
+                oss << arr[i];
             }
-            if (i != arr.size() - 1) str += ", ";
+            if (i != arr.size() - 1) oss << ", ";
         }
-        str += "]";
-        return str;
+        oss << "]";
+        return oss.str();
     }
 
 

@@ -77,3 +77,6 @@ TEST(LeetCode, Backtrack4) {
 TEST(LeetCode, BFS) {
     leetcode::bfs::shortest_bridge::test();
 }
+TEST(LeetCode, BFS2) {
+    leetcode::bfs::word_ladder_ii::test();
+}
