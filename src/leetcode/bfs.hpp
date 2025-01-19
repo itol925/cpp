@@ -118,4 +118,27 @@ namespace leetcode::bfs {
             cout << "shortest_bridge:" << do_shortest_bridge(grid) << endl;
         }
     }
+
+    namespace word_ladder_ii {
+        /**
+         * 给定一个起始字符串和一个终止字符串以及一个单词表，求是否可以将起始字符串每次改一个字符，直到改成终止字符串，
+         * 且所有中间修改过程表示的字符串都可以在单词表中找到，若存在，输出需要修改次数最少的所有一更改方式
+         * 比如：
+         * input: beginWord="hit", endWord="cot", wordList=["hot", "dot", "dog", "lot", "log", "cog"]
+         * output: [["hit", "hot", "dot", "dog", "cog"], ["hit", "hot", "lot", "log", "cog"]]
+         */
+         void do_word_ladder(string &begin, string &end, vector<string> &words, vector<string> &ret) {
+
+         }
+         void bfs(string &begin, string &end, string &cur) {
+
+         }
+         void test() {
+             string beginWord = "hit", endWord = "cot";
+             std::vector<string> wordList = {"hot", "dot", "dog", "lot", "log", "cog"};
+             for (int i = 0; i < beginWord.size(); i++) {
+
+             }
+         }
+    }
 }
