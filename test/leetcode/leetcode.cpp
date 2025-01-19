@@ -93,3 +93,7 @@ TEST(LeetCode, DynamicProgramming2) {
 TEST(LeetCode, DynamicProgramming3) {
     leetcode::dynamic_programming::arithmetic_slices::test();
 }
+
+TEST(LeetCode, DynamicProgramming4) {
+    leetcode::dynamic_programming::min_path_sum::test();
+}

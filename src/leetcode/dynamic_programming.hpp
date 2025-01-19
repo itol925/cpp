@@ -113,5 +113,39 @@ namespace leetcode {
                  cout << "res2：" << arithmetic_slices2(arr) << endl;
              }
         }
+
+        namespace min_path_sum {
+            /**
+             * 给定一个MxN大小的非负整数矩阵，求从左上角开始到右下角结束的，经过的数字的最小路径，每次只能向右或者向下移动
+             * 思路：sum[i][j] = min(sum[i-1][j] + grid[i][j], sum[i][j-1] + grid[i][j])
+             */
+            int min_path_sum(vector<vector<int>> &grid) {
+                vector<vector<int>> sum(grid.size(), vector(grid[0].size(), 0));
+                sum[0][0] = grid[0][0];
+                for (int i = 0; i < grid.size(); i++) {
+                    for (int j = 0; j < grid[0].size(); j++) {
+                        if (i == 0 && j == 0) {
+                            sum[i][j] = grid[i][j];
+                        } else if (i == 0) {
+                            sum[i][j] = sum[i][j-1] + grid[i][j];
+                        } else if (j == 0) {
+                            sum[i][j] = sum[i-1][j] + grid[i][j];
+                        } else {
+                            sum[i][j] = std::min(sum[i-1][j], sum[i][j-1]) + grid[i][j];
+                        }
+                    }
+                }
+                //cout << "grid:" << array_to_string(sum) << endl;
+                return sum[grid.size()-1][grid[0].size()-1];
+            }
+            void test() {
+                vector<vector<int>> grid = {
+                        {1,3,1},
+                        {1,5,1},
+                        {4,2,1}
+                };
+                cout << "res:" << min_path_sum(grid) << endl;
+            }
+        }
     }
 }
