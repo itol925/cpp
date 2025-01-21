@@ -152,7 +152,7 @@ namespace leetcode {
             /**
              * 给定一个由01组成的二维矩阵，求每个位置到最近的0的距离
              * 输入一个二维01数组，输出一个同样大小的二维数组，表示每个位置到最近的0的距离
-             * 思路：往一个方向遍历（左上向右下遍历，或者右下往左上遍历），dis（i,j）= 上一个位置+1 或 0)
+             * 思路：往一个方向遍历（左上向右下遍历，或者右下往左上遍历），dis（i,j）= 上一个位置+1 或 当前值
              */
              vector<vector<int>> matrix_01(vector<vector<int>> &grid) {
                 vector<vector<int>> dist(grid.size(), vector<int>(grid[0].size(), INT_MAX - 1));
