@@ -97,3 +97,11 @@ TEST(LeetCode, DynamicProgramming3) {
 TEST(LeetCode, DynamicProgramming4) {
     leetcode::dynamic_programming::min_path_sum::test();
 }
+
+TEST(LeetCode, DynamicProgramming5) {
+    leetcode::dynamic_programming::matrix_01::test();
+}
+
+TEST(LeetCode, DynamicProgramming6) {
+    leetcode::dynamic_programming::maximal_square::test();
+}

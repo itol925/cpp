@@ -147,5 +147,87 @@ namespace leetcode {
                 cout << "res:" << min_path_sum(grid) << endl;
             }
         }
+
+        namespace matrix_01 {
+            /**
+             * 给定一个由01组成的二维矩阵，求每个位置到最近的0的距离
+             * 输入一个二维01数组，输出一个同样大小的二维数组，表示每个位置到最近的0的距离
+             * 思路：往一个方向遍历（左上向右下遍历，或者右下往左上遍历），dis（i,j）= 上一个位置+1 或 0)
+             */
+             vector<vector<int>> matrix_01(vector<vector<int>> &grid) {
+                vector<vector<int>> dist(grid.size(), vector<int>(grid[0].size(), INT_MAX - 1));
+                // 左上往右下搜索
+                for (int i = 0; i < grid.size(); i++) {
+                    for (int j = 0; j < grid[0].size(); j++) {
+                        if (grid[i][j] == 0) {
+                            dist[i][j] = 0;
+                        } else {
+                            if (j > 0) {
+                                dist[i][j] = min(dist[i][j], dist[i][j-1] + 1);
+                            }
+                            if (i > 0) {
+                                dist[i][j] = min(dist[i][j], dist[i-1][j] + 1);
+                            }
+                        }
+                    }
+                }
+                // 右下往左上搜索
+                for (int i = grid.size() - 1; i >= 0; i--) {
+                    for (int j = grid[0].size() - 1; j >= 0; j--) {
+                        if (grid[i][j] == 0) {
+                            dist[i][j] = 0;
+                        } else {
+                            if (i < grid.size() - 1) {
+                                dist[i][j] = min(dist[i][j], dist[i+1][j] + 1);
+                            }
+                            if (j < grid[0].size() - 1) {
+                                dist[i][j] = min(dist[i][j], dist[i][j+1] + 1);
+                            }
+                        }
+                    }
+                }
+                return dist;
+             }
+             void test() {
+                 vector<vector<int>> grid = {
+                         {0,0,0},
+                         {0,1,0},
+                         {1,1,1}
+                 };
+                 auto res = matrix_01(grid);
+                 cout << "res:" << array_to_string(res) << endl;
+             }
+        }
+
+        namespace maximal_square {
+            /**
+             * 给定一个01矩阵，求全由1构成的正方形面积
+             * 思路：
+             * 当 grid[i][j]=1时，如果grid[i-1][j] = grid[i][j-1] = grid[i-1][j-1] = 1时，
+             * area[i][j]=min(area[i-1][j], area[i][j-1], area[i-1][j-1]) + 1,
+             */
+             int maximal_square(vector<vector<int>> &grid) {
+                 vector<vector<int>> area(grid.size(), vector<int>(grid[0].size(), 0));
+                 int max_size = 0;
+                 for (int i = 1; i < grid.size(); i++) {
+                     for (int j = 1; j < grid[0].size(); j++) {
+                         if (grid[i][j] == 1) {
+                             area[i][j] = min(area[i-1][j-1], min(area[i-1][j], area[i][j-1])) + 1;
+                         }
+                         max_size = max(max_size, area[i][j]);
+                     }
+                 }
+                 return max_size * max_size;
+             }
+             void test() {
+                 vector<vector<int>> grid = {
+                         {0,0,1,0},
+                         {0,1,1,1},
+                         {1,1,1,1},
+                         {0,1,1,1},
+                 };
+                 cout << "res:" << maximal_square(grid) << endl;
+             }
+        }
     }
 }
