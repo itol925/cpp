@@ -7,6 +7,12 @@
 #include "dfs.hpp"
 #include "bfs.hpp"
 #include "dynamic_programming.hpp"
+#include "test.hpp"
+
+
+TEST(LeetCode, Test) {
+    leetcode::test();
+}
 
 TEST(LeetCode, Greedy) {
     leetcode::greedy::assign_cookies::test();
@@ -104,4 +110,8 @@ TEST(LeetCode, DynamicProgramming5) {
 
 TEST(LeetCode, DynamicProgramming6) {
     leetcode::dynamic_programming::maximal_square::test();
+}
+
+TEST(LeetCode, DynamicProgramming7) {
+    leetcode::dynamic_programming::perfect_squares::test();
 }

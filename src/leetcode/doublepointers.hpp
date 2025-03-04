@@ -31,11 +31,23 @@ namespace leetcode::double_pointers {
             }
             return {-1};
         }
+        // 注：下面的实现不需要有序数组
+        vector<int> twoSum(vector<int>& nums, int target) {
+            std::unordered_map<int, int> numMap;
+            for (int i = 0; i < nums.size(); i++) {
+                int other = target - nums[i];
+                if (numMap.find(other) != numMap.end()) {
+                    return {i, numMap[other]};
+                }
+                numMap.insert({nums[i], i});
+            }
+            return {};
+        }
 
         void test() {
-            vector<int> arr = {1, 3, 6, 7, 9};
-            int target = 10;
-            cout << "two sum = " << target << ":" << array_to_string(two_sum(arr, target)) << endl;
+            vector<int> arr = {3,2,4};
+            int target = 6;
+            cout << "two sum = " << target << ":" << array_to_string(twoSum(arr, target)) << endl;
         }
     }
 

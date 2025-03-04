@@ -7,6 +7,7 @@
 #pragma once
 
 namespace common {
+    using namespace std;
     void sleep(int milliseconds) {
         std::this_thread::sleep_for(std::chrono::milliseconds (milliseconds));
     }
@@ -56,5 +57,54 @@ namespace common {
         return oss.str();
     }
 
+    int null = INFINITY;
+    struct TreeNode {
+        int val;
+        TreeNode *left;
+        TreeNode *right;
+        TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+    };
+    namespace {
+        TreeNode* constructTree(vector<int>& nums, int left, int right) {
+            if (left > right) return nullptr;  // 递归终止条件
 
+            int mid = left + (right - left) / 2;  // 选择中点
+            TreeNode* root = new TreeNode(nums[mid]);  // 创建根节点
+
+            root->left = constructTree(nums, left, mid - 1);  // 递归构造左子树
+            root->right = constructTree(nums, mid + 1, right);  // 递归构造右子树
+
+            return root;
+        }
+    }
+
+    TreeNode* newTree(vector<int>& nums) {
+        return constructTree(nums, 0, (int)nums.size() - 1);
+    }
+    void freeTree(TreeNode* root) {
+        if (!root) {
+            return;
+        }
+        freeTree(root->left);
+        freeTree(root->right);
+        delete root;
+    }
+
+    /**
+     * 中序遍历（左->根->右顺序，即根在中。前序为根->左->右，后序为左->右->根）
+     * @param root
+     * @return
+     */
+    string tree_to_string(TreeNode* root) {
+        if (!root) return "";
+        std::ostringstream oss;
+        oss << tree_to_string(root->left);
+        if (root->val == null) {
+            oss << "null" << " ";
+        } else {
+            oss << root->val << " ";
+        }
+        oss << tree_to_string(root->right);
+        return oss.str();
+    }
 }

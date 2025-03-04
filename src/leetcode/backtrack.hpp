@@ -15,16 +15,22 @@ namespace leetcode::dfs::backtrack {
         * 排列回溯
         * 输入一个数组，输出一个二维数组，为数组的所有排列组合
         * eg. input:[1,2,3], output:[[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 2, 1], [3, 1, 2]]
+        * 思路：
+        * 使用递归和回溯的方法来生成排列组合。具体步骤如下：
+        * 1.固定一个元素：在每一次递归中，固定数组中的一个元素（start）
+        * 递归处理剩余部分：对剩下的元素继续递归，生成它们的排列组合。
+        * 回溯：在递归返回后，恢复数组的原始状态，以便生成其他排列组合。
         */
-        void dfs(vector<vector<int>> &ans, vector<int> &arr, int level) {
-            if (level == arr.size() - 1) {
+        void dfs(vector<vector<int>> &ans, vector<int> &arr, int start) {
+            if (start == arr.size() - 1) {
                 ans.push_back(arr);
                 return;
             }
-            for (int i = level; i < arr.size(); ++i) {
-                swap(arr[i], arr[level]);
-                dfs(ans, arr, level + 1);
-                swap(arr[i], arr[level]);
+            // 固定元素start，依次swap start与之后的元素
+            for (int i = start; i < arr.size(); ++i) {
+                swap(arr[start], arr[i]);
+                dfs(ans, arr, start + 1);
+                swap(arr[start], arr[i]);
             }
         }
         vector<vector<int>> permutation(vector<int> arr) {

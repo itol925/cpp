@@ -16,7 +16,7 @@ using namespace common;
 namespace leetcode::bfs {
     namespace shortest_bridge {
         /**
-         * 给定一个二维0-1矩阵，其中1表示陆地，0表示海洋，每个位置与上下左右相连，已知矩阵中有眀只有两个岛屿，求最少要填海造陆多少个位置才可以
+         * 给定一个二维0-1矩阵，其中1表示陆地，0表示海洋，每个位置与上下左右相连，已知矩阵中有且只有两个岛屿，求最少要填海造陆多少个位置才可以
          * 将两个岛屿相连.
          * 思路：找两个岛屿的最短距离
          * https://leetcode.cn/problems/shortest-bridge/description/
