@@ -57,6 +57,45 @@ namespace common {
         return oss.str();
     }
 
+    struct ListNode {
+        int val;
+        ListNode *next;
+        ListNode() : val(0), next(nullptr) {}
+        ListNode(int x) : val(x), next(nullptr) {}
+        ListNode(int x, ListNode *next) : val(x), next(next) {}
+    };
+    ListNode* newList(vector<int> arr) {
+        ListNode* node = nullptr, *head = nullptr;
+        for (int i : arr) {
+            auto* next = new ListNode(i);
+            if (node) {
+                node->next = next;
+                node = next;
+            } else {
+                head = node = next;
+            }
+        }
+        return head;
+    }
+    void freeList(ListNode* list) {
+        ListNode* n = list, *next;
+        while(n) {
+            next = n->next;
+            delete n;
+            n = next;
+        }
+    }
+    void printList(ListNode* list) {
+        while(list) {
+            if (list->next) {
+                cout << list->val << " -> ";
+            } else {
+                cout << list->val << endl;
+            }
+            list = list->next;
+        }
+    }
+
     int null = INFINITY;
     struct TreeNode {
         int val;
